@@ -32,61 +32,20 @@ class AdminController extends Controller
        }
     }
     public function createclasspro(Request $request){
-      $id = Auth::user()->id;
-      $users = User::find($id);
-
-      $this->validate($request, [
+      $id = Auth::user()->organisation_id;
+     $this->validate($request, [
         'name' => 'required',
       ]);
-//dd($users);
-    if($users['user_type'] == '0' || $users['user_type'] == '1'){
-      if($users['organisation_id']== '0'){
-      /// dd($request);
+
           $class = new Classes;
-          $class->name = $request->name;
+          $class->class_name = $request->name;
           $class->organisation_id = $id;
           $class->save();
           return response()->json([
               'success' => 'Done'
           ]);
+     }
 
-        }
-  }
-}
-
-  public function allclass(){
-      $id = Auth::user()->id;
-      $users = User::find($id);
-      $Classes = Classes::where('organisation_id',$id)->select('id','name')->get();
-  return Inertia::render('Admin/Allclass',['Data'=>$Classes]);
-  }
-
-  public function update($id){
-   $Data = Classes::where('id',$id)->select('id','name')->get();
-  return Inertia::render('Admin/Updateclass',['updatedata'=>$Data]);
-  }
-
-  public function update_class(Request $request){
-
-       $class = new Classes();
-         $this->validate($request, [
-        'name' => 'required',
-      ]);
-      $class = Classes::find($request->id);
-      $class->name = $request->get('name');
-      $class->save();
-return response()->json([
-              'success' => 'Done'
-          ]);
-  }
-
-  public function delete($id)
-  {
-    Classes::find($id)->delete();
-    return response()->json([
-              'success' => 'Deleted'
-          ]);
-  }
 
   public function sub_admin()
   {
@@ -191,8 +150,7 @@ return response()->json([
             'title' => 'required',
             'description' => 'required',
             'posted_by' => 'required',
-
-         ]);
+      ]);
 
 
    if($users['organisation_id']== 0){
@@ -537,7 +495,7 @@ return response()->json([
         ->select('id','first_name','last_name')
         ->get();
      $class = Classes::where('organisation_id',$id)
-       ->select('id','name')
+       ->select('id','class_name')
         ->get();
      $section = Section::where('organisation_id',$id)
        ->select('id','section_name')
@@ -554,7 +512,7 @@ return response()->json([
         ->select('id','first_name','last_name')
         ->get();
      $class = Classes::where('organisation_id',$users['organisation_id'])
-       ->select('id','name')
+       ->select('id','class_name')
         ->get();
      $section = Section::where('organisation_id',$users['organisation_id'])
        ->select('id','section_name')
@@ -611,5 +569,10 @@ Subject::create(['subject_name' => $request->name,'organisation_id'=>$users['org
   public function fees()
   {
     return Inertia::render('Admin/Createfees');
+  }
+
+  public function classteacherpost()
+  {
+
   }
 }

@@ -1,7 +1,39 @@
 <template>
- <header-componant />
+<header-componant />
 <nav-componant />
- <!-- Page Area Start Here -->
+ <div v-if="showUpdateModal">
+        <transition name="modal">
+            <div class="modal-mask">
+                <div class="modal-wrapper">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Update Subject Name</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" @click="showUpdateModal = false">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="first_name">Subject Name</label>
+                                    <input type="text" class="form-control" id="subject_name"
+                                          v-model="updateData.subject_name" >
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" @click="showUpdateModal = false">Close
+                                </button>
+                                <button @click="update()" type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+    </div>
+  <!-- Page Area Start Here -->
         <div class="dashboard-page-one">
             <!-- Sidebar Area Start Here -->
             <div class="sidebar-main sidebar-menu-one sidebar-expand-md sidebar-color">
@@ -79,7 +111,7 @@
                             <a href="#" class="nav-link"><i class="flaticon-couple"></i><span>Departments</span></a>
                             <ul class="nav sub-group-menu">
                                 <li class="nav-item">
-                                    <a href="all-department" class="nav-link"><i class="fas fa-angle-right"></i>All
+                                    <a href="all-parents.html" class="nav-link"><i class="fas fa-angle-right"></i>All
                                         Departments</a>
                                 </li>
 
@@ -89,7 +121,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <!--li class="nav-item sidebar-nav-item">
+                        <li class="nav-item sidebar-nav-item">
                             <a href="#" class="nav-link"><i class="flaticon-books"></i><span>Library</span></a>
                             <ul class="nav sub-group-menu">
                                 <li class="nav-item">
@@ -101,7 +133,7 @@
                                         Book</a>
                                 </li>
                             </ul>
-                        </li-->
+                        </li>
                         <li class="nav-item sidebar-nav-item">
                             <a href="#" class="nav-link"><i class="flaticon-technological"></i><span>Fees</span></a>
                             <ul class="nav sub-group-menu">
@@ -121,7 +153,7 @@
                                     class="flaticon-maths-class-materials-cross-of-a-pencil-and-a-ruler"></i><span>Class</span></a>
                             <ul class="nav sub-group-menu">
                                 <li class="nav-item">
-                                    <a href="all-class" class="nav-link"><i class="fas fa-angle-right"></i>All
+                                    <a href="all-class.html" class="nav-link"><i class="fas fa-angle-right"></i>All
                                         Classes</a>
                                 </li>
                                 <li class="nav-item">
@@ -135,7 +167,7 @@
                                     class="flaticon-maths-class-materials-cross-of-a-pencil-and-a-ruler"></i><span>Section</span></a>
                             <ul class="nav sub-group-menu">
                                 <li class="nav-item">
-                                    <a href="all-section" class="nav-link"><i class="fas fa-angle-right"></i>All
+                                    <a href="all-class.html" class="nav-link"><i class="fas fa-angle-right"></i>All
                                         Section</a>
                                 </li>
                                 <li class="nav-item">
@@ -179,7 +211,7 @@
                             <a href="student-attendence.html" class="nav-link"><i
                                     class="flaticon-checklist"></i><span>Attendence</span></a>
                         </li>
-                        <!--li class="nav-item sidebar-nav-item">
+                        <li class="nav-item sidebar-nav-item">
                             <a href="#" class="nav-link"><i class="flaticon-shopping-list"></i><span>Exam</span></a>
                             <ul class="nav sub-group-menu">
                                 <li class="nav-item">
@@ -191,28 +223,31 @@
                                         Grades</a>
                                 </li>
                             </ul>
-                        </!li>
+                        </li>
                         <li class="nav-item">
                             <a href="transport.html" class="nav-link"><i
                                     class="flaticon-bus-side-view"></i><span>Transport</span></a>
                         </li>
-                        <li-- class="nav-item">
+                        <li class="nav-item">
                             <a href="hostel.html" class="nav-link"><i class="flaticon-bed"></i><span>Hostel</span></a>
-                        </li-->
+                        </li>
 
                         <li class="nav-item sidebar-nav-item">
                             <a href="#" class="nav-link"><i class="flaticon-script"></i><span>Notice</span></a>
                             <ul class="nav sub-group-menu">
                                 <li class="nav-item">
-                                    <a href="all-notice" class="nav-link"><i class="fas fa-angle-right"></i>All Notices</a>
+                                    <a href="exam-schedule.html" class="nav-link"><i class="fas fa-angle-right"></i>All Notices</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="notice" class="nav-link"><i class="fas fa-angle-right"></i>Add Notice</a>
                                 </li>
                             </ul>
                         </li>
-
-                        <!--li class="nav-item sidebar-nav-item">
+                        <li class="nav-item">
+                            <a href="messaging.html" class="nav-link"><i
+                                    class="flaticon-chat"></i><span>Messeage</span></a>
+                        </li>
+                        <li class="nav-item sidebar-nav-item">
                             <a href="#" class="nav-link"><i class="flaticon-menu-1"></i><span>UI Elements</span></a>
                             <ul class="nav sub-group-menu">
                                 <li class="nav-item">
@@ -238,7 +273,7 @@
                                             class="fas fa-angle-right"></i>Widget</a>
                                 </li>
                             </ul>
-                        </--li>
+                        </li>
                         <li class="nav-item">
                             <a href="map.html" class="nav-link"><i
                                     class="flaticon-planet-earth"></i><span>Map</span></a>
@@ -246,130 +281,151 @@
                         <li class="nav-item">
                             <a href="account-settings.html" class="nav-link"><i
                                     class="flaticon-settings"></i><span>Account</span></a>
-                        </li-->
+                        </li>
                     </ul>
                 </div>
     </div>
+
             <!-- Sidebar Area End Here -->
-               <div class="dashboard-content-one">
+<div class="dashboard-content-one">
                 <!-- Breadcubs Area Start Here -->
                 <div class="breadcrumbs-area">
-                    <h3>Owner Dashboard</h3>
+                    <h3>Subject</h3>
+                    <ul>
+                        <li>
+                            <a href="index.html">Home</a>
+                        </li>
+                        <li>All Subject</li>
+                    </ul>
                 </div>
                 <!-- Breadcubs Area End Here -->
-                <!-- Dashboard summery Start Here -->
+                <!-- Class Table Area Start Here -->
+                <div class="card height-auto">
+                    <div class="card-body">
+                        <div class="heading-layout1">
+                            <div class="item-title">
+                                <h3>All Subject</h3>
+                            </div>
+
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table display data-table text-nowrap">
+                                <thead>
+                                    <tr >
+                                        <th>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input checkAll">
+                                                <label class="form-check-label">S. No.</label>
+                                            </div>
+                                        </th>
+                                        <th>Subject Name</th>
+
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(data,index) in subject" :key="index">
+                                    <!--tr v-for="Classes in Data" :key="Classes"-->
+                                        <td>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input">
+                                                <label class="form-check-label">{{index+1}}</label>
+                                            </div>
+                                        </td>
+
+                                        <td>{{data.subject_name}}</td>
+
+                                         <td>
+                                            <div class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    <span class="flaticon-more-button-of-three-dots"></span>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+
+                                                   <a class="dropdown-item" @click="showUpdate(data)"><i
+                                                class="fas fa-cogs text-dark-pastel-green"></i> Edit</a>
+                                                   <button  class="dropdown-item"  @click="destroy(data.id)"><i class="fas fa-times text-orange-red"></i>Delete</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
 
 
-                  <div class="row gutters-20">
-                    <div class="col-xl-3 col-sm-6 col-12">
-                        <div class="dashboard-summery-one mg-b-20">
-                            <div class="row align-items-center">
-                                <div class="col-6">
-                                    <div class="item-icon bg-light-green ">
-                                        <i class="flaticon-classmates text-green"></i>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="item-content">
-                                        <div class="item-title">Teachers</div>
 
-                                        <div class="item-number" ><span class="counter" ></span></div>
-                                    </div>
-                                </div>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-sm-6 col-12">
-                        <div class="dashboard-summery-one mg-b-20">
-                            <div class="row align-items-center">
-                                <div class="col-6">
-                                    <div class="item-icon bg-light-blue">
-                                        <i class="flaticon-multiple-users-silhouette text-blue"></i>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="item-content">
-                                        <div class="item-title">Student</div>
-                                        <div class="item-number"><span class="counter" data-num="2250">2,250</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <div class="col-xl-3 col-sm-6 col-12">
-                        <div class="dashboard-summery-one mg-b-20">
-                            <div class="row align-items-center">
-                                <div class="col-6">
-                                    <div class="item-icon bg-light-yellow">
-                                        <i class="flaticon-couple text-orange"></i>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="item-content">
-                                        <div class="item-title">Fees Paid</div>
-                                        <div class="item-number"><span>$</span><span class="counter" data-num="193000">1,93,000</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                      <div class="col-xl-3 col-sm-6 col-12">
-                        <div class="dashboard-summery-one mg-b-20">
-                            <div class="row align-items-center">
-                                <div class="col-6">
-                                    <div class="item-icon bg-light-yellow">
-                                        <i class="flaticon-couple text-orange"></i>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="item-content">
-                                        <div class="item-title">Due fees</div>
-                                        <div class="item-number"><span>$</span><span class="counter" data-num="193000">1,93,000</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            <div class="col-xl-3 col-sm-6 col-12">
-                        <div class="dashboard-summery-one mg-b-20">
-                            <div class="row align-items-center">
-                                <div class="col-6">
-                                    <div class="item-icon bg-light-red">
-                                        <i class="flaticon-money text-red"></i>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="item-content">
-                                        <div class="item-title">Total Earnings</div>
-                                        <div class="item-number"><span>$</span><span class="counter" data-num="193000">1,93,000</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-       </div>
-       </div>
+                </div>
+                </div>
+                </div>
+                <!-- Class Table Area End Here -->
+
 <footer-componant />
-
 </template>
-
 <script>
-    import Footer from '@/Pages/Admin/Footer.vue'
-    import Header from '@/Pages/Admin/Header.vue'
-    import Nav from '@/Pages/Admin/Nav.vue'
 
-
-    export default {
-            props:{
-
+import Header from '@/Pages/Admin/Header.vue'
+import Nav from '@/Pages/Admin/Nav.vue'
+import Footer from '@/Pages/Admin/Footer.vue'
+export default {
+      props:{
+        'subject':{},
      },
+     data(){
+       return {
+            showUpdateModal: false,
+            updateData : {},
+        }
+     },
+    components: {
 
-        components: {
-            'FooterComponant': Footer,
-            'HeaderComponant': Header,
-            'NavComponant': Nav
+        HeaderComponant: Header,
+        NavComponant: Nav,
+       FooterComponant: Footer,
+    },
+     methods: {
+
+             destroy(id){
+                     if (confirm('Are you sure you want to delete this?')) {
+                   this.$inertia.post('all-subject-destroy/destroy/' + id)
+                      }
+                 },
+
+             update() {
+            //show update popup
+            this.$inertia.post(`/subject-update/update/${this.updateData.id}`, {
+                data: this.updateData
+            });
+            this.showUpdateModal = false;
+           },
+
+            showUpdate(data) {
+            //show update popup
+            this.updateData = data;
+            this.showUpdateModal = true;
 
         },
-    }
+     }
+
+}
 </script>
+<style>
+.modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    display: table;
+    transition: opacity .3s ease;
+}
+
+.modal-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+</style>

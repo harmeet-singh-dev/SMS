@@ -11,8 +11,8 @@ class Classes extends Model
       protected $table = 'classes'; //tablename
       protected $primaryKey = 'id'; //primary key
       protected $fillable = [
-         'name',
+         'class_name',
          'organisation_id'
-         
+
     ];
 }
