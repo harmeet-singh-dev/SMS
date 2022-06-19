@@ -29,6 +29,7 @@ class Student extends Model
         'father_name',
         'mother_name',
         'photo',
+        'pincode',
         'created_at',
         'updated_at'
 
