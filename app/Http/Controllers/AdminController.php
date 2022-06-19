@@ -19,80 +19,33 @@ use Auth;
 class AdminController extends Controller
 {
 
-    public function dashboard(Request $request)
-    {
+    public function dashboard(Request $request){
         $user_type = Auth::user()->user_type;
 
 
-        if ($user_type == '0') {
+        if($user_type == '0'){
             $Data = User::where('user_type', '=', '1')->count();
-            return Inertia::render('Admin/Dashboard', compact('Data'));
+            return Inertia::render('Admin/Dashboard',compact('Data'));
         }
-        if ($user_type == '1') {
+        if($user_type == '1'){
             return Inertia::render('Admin/OwnerDashboard');
         }
     }
-
-    public function createclasspro(Request $request)
-    {
-        $id = Auth::user()->id;
-        $users = User::find($id);
-
+    public function createclasspro(Request $request){
+        $id = Auth::user()->organisation_id;
         $this->validate($request, [
             'name' => 'required',
         ]);
-//dd($users);
-        if ($users['user_type'] == '0' || $users['user_type'] == '1') {
-            if ($users['organisation_id'] == '0') {
-                /// dd($request);
-                $class = new Classes;
-                $class->name = $request->name;
-                $class->organisation_id = $id;
-                $class->save();
-                return response()->json([
-                    'success' => 'Done'
-                ]);
 
-            }
-        }
-    }
-
-    public function allclass()
-    {
-        $id = Auth::user()->id;
-        $users = User::find($id);
-        $Classes = Classes::where('organisation_id', $id)->select('id', 'name')->get();
-        return Inertia::render('Admin/Allclass', ['Data' => $Classes]);
-    }
-
-    public function update($id)
-    {
-        $Data = Classes::where('id', $id)->select('id', 'name')->get();
-        return Inertia::render('Admin/Updateclass', ['updatedata' => $Data]);
-    }
-
-    public function update_class(Request $request)
-    {
-
-        $class = new Classes();
-        $this->validate($request, [
-            'name' => 'required',
-        ]);
-        $class = Classes::find($request->id);
-        $class->name = $request->get('name');
+        $class = new Classes;
+        $class->class_name = $request->name;
+        $class->organisation_id = $id;
         $class->save();
         return response()->json([
             'success' => 'Done'
         ]);
     }
 
-    public function delete($id)
-    {
-        Classes::find($id)->delete();
-        return response()->json([
-            'success' => 'Deleted'
-        ]);
-    }
 
     public function sub_admin()
     {
@@ -104,41 +57,40 @@ class AdminController extends Controller
         $id = Auth::user()->id;
         $users = User::find($id);
 
-        if ($users['user_type'] == '1' || $users['user_type'] == '5') {
+        if($users['user_type'] == '1' || $users['user_type'] == '5'){
             $request->validate([
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'email' => 'required',
             ]);
 
-            if ($users['organisation_id'] == 0) {
+            if($users['organisation_id']== 0){
                 User::create([
                     'organisation_id' => $id,
                     'user_type' => '5',
-                    'first_name' => $request->get('first_name'),
-                    'last_name' => $request->get('last_name'),
-                    'email' => $request->get('email'),
-                    'password' => bcrypt('12345678'),
+                    'first_name'=>$request->get('first_name'),
+                    'last_name'=>$request->get('last_name'),
+                    'email'=>$request->get('email'),
+                    'password'=>bcrypt('12345678'),
                 ]);
 
                 return response()->json([
                     'success' => 'Done'
                 ]);
-            } else {
+            }else{
                 User::create([
                     'organisation_id' => $users['organisation_id'],
                     'user_type' => '5',
-                    'first_name' => $request->get('first_name'),
-                    'last_name' => $request->get('last_name'),
-                    'email' => $request->get('email'),
-                    'password' => bcrypt('12345678'),
+                    'first_name'=>$request->get('first_name'),
+                    'last_name'=>$request->get('last_name'),
+                    'email'=>$request->get('email'),
+                    'password'=>bcrypt('12345678'),
                 ]);
 
                 return response()->json([
                     'success' => 'Done'
                 ]);
-            }
-        } else {
+            }}else{
             return Inertia::render('/');
         }
     }
@@ -152,26 +104,26 @@ class AdminController extends Controller
     {
         $id = Auth::user()->id;
         $users = User::find($id);
-        if ($users['user_type'] == '1' || $users['user_type'] == '2') {
+        if($users['user_type'] == '1' || $users['user_type'] == '2'){
             $request->validate([
                 'name' => 'required',
 
             ]);
 
 
-            if ($users['organisation_id'] == 0) {
+            if($users['organisation_id']== 0){
                 Section::create([
                     'organisation_id' => $id,
-                    'section_name' => $request->get('name'),
+                    'section_name'=>$request->get('name'),
                 ]);
                 return response()->json([
                     'success' => 'Done'
                 ]);
-            } else {
+            }else{
 
                 Section::create([
                     'organisation_id' => $users['organisation_id'],
-                    'section_name' => $request->get('name'),
+                    'section_name'=>$request->get('name'),
                 ]);
                 return response()->json([
                     'success' => 'Done'
@@ -179,7 +131,7 @@ class AdminController extends Controller
             }
 
 
-        } else {
+        }else{
             return Inertia::render('/');
         }
     }
@@ -193,51 +145,51 @@ class AdminController extends Controller
     {
         $id = Auth::user()->id;
         $users = User::find($id);
-        if ($users['user_type'] == '1' || $users['user_type'] == '2') {
+        if($users['user_type'] == '1' || $users['user_type'] == '2'){
             $request->validate([
                 'title' => 'required',
                 'description' => 'required',
                 'posted_by' => 'required',
-
             ]);
 
 
-            if ($users['organisation_id'] == 0) {
+            if($users['organisation_id']== 0){
                 Notice::create([
                     'organisation_id' => $id,
-                    'title' => $request->get('title'),
-                    'description' => $request->get('description'),
-                    'posted_by' => $request->get('posted_by'),
-                    'student' => $request->get('student'),
-                    'teacher' => $request->get('teacher'),
-                    'time' => $request->get('time'),
+                    'title'=>$request->get('title'),
+                    'description'=>$request->get('description'),
+                    'posted_by'=>$request->get('posted_by'),
+                    'student'=>$request->get('student'),
+                    'teacher'=>$request->get('teacher'),
+                    'time'=>$request->get('time'),
                 ]);
-            } else {
+            }else{
 
                 Notice::create([
                     'organisation_id' => $users['organisation_id'],
-                    'title' => $request->get('title'),
-                    'description' => $request->get('description'),
-                    'posted_by' => $request->get('posted_by'),
-                    'student' => $request->get('student'),
-                    'teacher' => $request->get('teacher'),
-                    'time' => $request->get('time'),
+                    'title'=>$request->get('title'),
+                    'description'=>$request->get('description'),
+                    'posted_by'=>$request->get('posted_by'),
+                    'student'=>$request->get('student'),
+                    'teacher'=>$request->get('teacher'),
+                    'time'=>$request->get('time'),
                 ]);
 
             }
-        } else {
+        }else{
             return Inertia::render('/');
         }
     }
+
 
     public function department()
     {
         $id = Auth::user()->id;
         $users = User::find($id);
 
-        if ($users['user_type'] == '1' || $users['user_type'] == '2') {
+        if($users['user_type'] == '1' || $users['user_type'] == '2'){
             return Inertia::render('Admin/Createdepartment');
-        } else {
+        }else{
             return Inertia::render('/');
         }
     }
@@ -247,76 +199,70 @@ class AdminController extends Controller
         $id = Auth::user()->id;
         $users = User::find($id);
 
-        if ($users['user_type'] == '1' || $users['user_type'] == '2') {
+        if($users['user_type'] == '1' || $users['user_type'] == '2'){
 
-            if ($users['organisation_id'] == 0) {
-                Department::create(['organisation_id' => $id, 'department_name' => $request->name]);
+            if($users['organisation_id']== 0){
+                Department::create(['organisation_id'=>$id,'department_name'=>$request->name]);
                 return response()->json([
                     'success' => 'Done'
                 ]);
-            } else {
+            }else{
 
-                Department::create([
-                    'organisation_id' => $users['organisation_id'], 'department_name' => $request->name
-                ]);
+                Department::create(['organisation_id'=>$users['organisation_id'],'department_name'=>$request->name]);
                 return response()->json([
                     'success' => 'Done'
                 ]);
             }
-        } else {
+        }else{
             return Inertia::render('/');
         }
     }
+
 
     public function class_teacher()
     {
         $id = Auth::user()->id;
         $users = User::find($id);
 
-        if ($users['user_type'] == '1' || $users['user_type'] == '2') {
+        if($users['user_type'] == '1' || $users['user_type'] == '2'){
 
-            if ($users['organisation_id'] == 0) {
-                $teacher = User::where('organisation_id', $id)
-                    ->where('user_type', '4')
-                    ->select('id', 'first_name', 'last_name')
+            if($users['organisation_id']== 0){
+                $teacher = User::where('organisation_id',$id)
+                    ->where('user_type','4')
+                    ->select('id','first_name','last_name')
                     ->get();
-                $class = Classes::where('organisation_id', $id)
-                    ->select('id', 'name')
+                $class = Classes::where('organisation_id',$id)
+                    ->select('id','class_name')
                     ->get();
-                $section = Section::where('organisation_id', $id)
-                    ->select('id', 'section_name')
+                $section = Section::where('organisation_id',$id)
+                    ->select('id','section_name')
                     ->get();
-                $department = Department::where('organisation_id', $id)
-                    ->select('id', 'department_name')
+                $department = Department::where('organisation_id',$id)
+                    ->select('id','department_name')
                     ->get();
 
-                return Inertia::render('Admin/Createclassteacher', [
-                    'classdata' => $class, 'sectiondata' => $section, 'teacherdata' => $teacher,
-                    'departmentdata' => $department
-                ]);
-            } else {
+                return Inertia::render('Admin/Createclassteacher',['classdata'=>$class,'sectiondata'=>$section,'teacherdata'=>$teacher,'departmentdata'=>$department]);
+            }else{
 
-                $teacher = User::where('organisation_id', $users['organisation_id'])
-                    ->where('user_type', '4')
-                    ->select('id', 'first_name', 'last_name')
+                $teacher = User::where('organisation_id',$users['organisation_id'])
+                    ->where('user_type','4')
+                    ->select('id','first_name','last_name')
                     ->get();
-                $class = Classes::where('organisation_id', $users['organisation_id'])
-                    ->select('id', 'name')
+                $class = Classes::where('organisation_id',$users['organisation_id'])
+                    ->select('id','class_name')
                     ->get();
-                $section = Section::where('organisation_id', $users['organisation_id'])
-                    ->select('id', 'section_name')
+                $section = Section::where('organisation_id',$users['organisation_id'])
+                    ->select('id','section_name')
                     ->get();
-                $department = Department::where('organisation_id', $id)
-                    ->select('id', 'department_name')
+                $department = Department::where('organisation_id',$id)
+                    ->select('id','department_name')
                     ->get();
 
 
-                return Inertia::render('Admin/Createclassteacher', [
-                    'classdata' => $class, 'sectiondata' => $section, 'teacherdata' => $teacher,
-                    'departmentdata' => $department
-                ]);
+                return Inertia::render('Admin/Createclassteacher',['classdata'=>$class,'sectiondata'=>$section,'teacherdata'=>$teacher,'departmentdata'=>$department]);
             }
-        } else {
+        }
+        else{
             return Inertia::render('/');
         }
     }
@@ -330,29 +276,28 @@ class AdminController extends Controller
     {
         $id = Auth::user()->id;
         $users = User::find($id);
-        $request->validate([
-            'name' => 'required',
+        $request->validate([ 'name' => 'required',
         ]);
-        if ($users['user_type'] == '1' || $users['user_type'] == '2') {
-            if ($users['organisation_id'] == 0) {
+        if($users['user_type'] == '1' || $users['user_type'] == '2'){
+            if($users['organisation_id']== 0){
 
-                Subject::create(['subject_name' => $request->name, 'organisation_id' => $id]);
+                Subject::create(['subject_name' => $request->name,'organisation_id'=>$id]);
 
                 return response()->json([
                     'success' => 'Done'
                 ]);
 
 
-            } else {
+            }else{
 
-                Subject::create(['subject_name' => $request->name, 'organisation_id' => $users['organisation_id']]);
+                Subject::create(['subject_name' => $request->name,'organisation_id'=>$users['organisation_id']]);
 
                 return response()->json([
                     'success' => 'Done'
                 ]);
 
             }
-        } else {
+        }else{
             return Inertia::render('/');
         }
 
@@ -361,5 +306,10 @@ class AdminController extends Controller
     public function fees()
     {
         return Inertia::render('Admin/Createfees');
+    }
+
+    public function classteacherpost()
+    {
+
     }
 }
