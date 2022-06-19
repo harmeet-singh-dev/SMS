@@ -30,6 +30,11 @@ class Teacher extends Model
         'photo',
         'created_at',
         'updated_at'
-        
+
      ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
