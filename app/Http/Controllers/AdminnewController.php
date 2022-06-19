@@ -18,15 +18,15 @@ use Auth;
 
 class AdminnewController extends Controller
 {
- public function allsubadmin()
-  {
-      $id = Auth::user()->organisation_id;
-      $sub_admins = User::where('organisation_id', '=', $id)
-          ->where('user_type', '=', 5)
-          ->with('permission')
-          ->get(['id', 'first_name', 'last_name', 'email']);
+    public function allsubadmin()
+    {
+        $id = Auth::user()->organisation_id;
+        $sub_admins = User::where('organisation_id', '=', $id)
+            ->where('user_type', '=', 5)
+            ->with('permission')
+            ->get(['id', 'first_name', 'last_name', 'email']);
 
-      //loop through the sub admin and check if permission is set
+        //loop through the sub admin and check if permission is set
         foreach ($sub_admins as $sub_admin) {
             if ($sub_admin->permission === null) {
                 $sub_admin->permission()->create([
@@ -36,8 +36,8 @@ class AdminnewController extends Controller
             }
         }
 
-     return Inertia::render('Admin/Allsubadmin',compact('sub_admins'));
-  }
+        return Inertia::render('Admin/Allsubadmin',compact('sub_admins'));
+    }
 
     public function updateSubAdmin(Request $request,User $user)
     {
@@ -48,7 +48,7 @@ class AdminnewController extends Controller
 
     }
 
-  public function updateSubAdminPermission(Request $request,User $user)
+    public function updateSubAdminPermission(Request $request,User $user)
     {
         $data = $request->data;
         $user->permission()->update($data);
@@ -67,13 +67,13 @@ class AdminnewController extends Controller
 
     public function allsubject()
     {     $id = Auth::user()->organisation_id;
-          $subject = Subject::where('organisation_id','=',$id)->get(['id','subject_name']);
-          return Inertia::render('Admin/Allsubject',compact('subject'));
+        $subject = Subject::where('organisation_id','=',$id)->get(['id','subject_name']);
+        return Inertia::render('Admin/Allsubject',compact('subject'));
     }
 
-      public function deleteSubject($id)
+    public function deleteSubject($id)
     {
-         Subject::where('id',$id)->delete();
+        Subject::where('id',$id)->delete();
 
         return Redirect::back()->with('success', 'Subject deleted successfully');
     }
@@ -84,24 +84,24 @@ class AdminnewController extends Controller
         $newdata = $request->data;
 
 
-            $subject = Subject::find($newdata['id']);
-            $subject->subject_name = $newdata['subject_name'];
-           $subject->save();
+        $subject = Subject::find($newdata['id']);
+        $subject->subject_name = $newdata['subject_name'];
+        $subject->save();
 
-       return Redirect::back()->with('success', 'Subject updated successfully');
+        return Redirect::back()->with('success', 'Subject updated successfully');
     }
 
     public function alldepartment()
     {
-          $id = Auth::user()->organisation_id;
-          $department = Department::where('organisation_id','=',$id)->get(['id','department_name']);
-          return Inertia::render('Admin/Alldepartment',compact('department'));
+        $id = Auth::user()->organisation_id;
+        $department = Department::where('organisation_id','=',$id)->get(['id','department_name']);
+        return Inertia::render('Admin/Alldepartment',compact('department'));
 
     }
 
-     public function deletedepartment($id)
+    public function deletedepartment($id)
     {
-         Department::where('id',$id)->delete();
+        Department::where('id',$id)->delete();
 
         return Redirect::back()->with('success', 'Department deleted successfully');
     }
@@ -112,83 +112,83 @@ class AdminnewController extends Controller
         $newdata = $request->data;
 
 
-            $department = Department::find($newdata['id']);
-            $department->department_name = $newdata['department_name'];
-            $department->save();
+        $department = Department::find($newdata['id']);
+        $department->department_name = $newdata['department_name'];
+        $department->save();
 
-       return Redirect::back()->with('success', 'Department updated successfully');
+        return Redirect::back()->with('success', 'Department updated successfully');
     }
 
-     public function allsection()
+    public function allsection()
     {
-          $id = Auth::user()->organisation_id;
-          $section = Section::where('organisation_id','=',$id)->get(['id','section_name']);
-          return Inertia::render('Admin/Allsection',compact('section'));
+        $id = Auth::user()->organisation_id;
+        $section = Section::where('organisation_id','=',$id)->get(['id','section_name']);
+        return Inertia::render('Admin/Allsection',compact('section'));
     }
 
-     public function deletesection($id)
+    public function deletesection($id)
     {
-         Section::where('id',$id)->delete();
+        Section::where('id',$id)->delete();
         return Redirect::back()->with('success', 'Section deleted successfully');
     }
 
     public function updatesection(Request $request)
     {
-            $newdata = $request->data;
-            $section = Section::find($newdata['id']);
-            $section->section_name = $newdata['section_name'];
-            $section->save();
-       return Redirect::back()->with('success', 'Section updated successfully');
+        $newdata = $request->data;
+        $section = Section::find($newdata['id']);
+        $section->section_name = $newdata['section_name'];
+        $section->save();
+        return Redirect::back()->with('success', 'Section updated successfully');
     }
 
-     public function allclass()
+    public function allclass()
     {
-          $id = Auth::user()->organisation_id;
-          $classes = Classes::where('organisation_id','=',$id)->get(['id','class_name']);
-          return Inertia::render('Admin/Allclass',compact('classes'));
+        $id = Auth::user()->organisation_id;
+        $classes = Classes::where('organisation_id','=',$id)->get(['id','class_name']);
+        return Inertia::render('Admin/Allclass',compact('classes'));
     }
 
-     public function deleteclass($id)
+    public function deleteclass($id)
     {
-         Classes::where('id',$id)->delete();
+        Classes::where('id',$id)->delete();
         return Redirect::back()->with('success', 'class deleted successfully');
     }
 
     public function updateclass(Request $request)
     {
-            $newdata = $request->data;
-            $class = Classes::find($newdata['id']);
-            $class->class_name = $newdata['class_name'];
-            $class->save();
-       return Redirect::back()->with('success', 'class updated successfully');
+        $newdata = $request->data;
+        $class = Classes::find($newdata['id']);
+        $class->class_name = $newdata['class_name'];
+        $class->save();
+        return Redirect::back()->with('success', 'class updated successfully');
     }
 
-     public function allnotice()
+    public function allnotice()
     {
-          $id = Auth::user()->organisation_id;
-          $notice = Notice::where('organisation_id','=',$id)->get(['id','title','description','posted_by','time','teacher','student']);
-          return Inertia::render('Admin/Allnotice',compact('notice'));
+        $id = Auth::user()->organisation_id;
+        $notice = Notice::where('organisation_id','=',$id)->get(['id','title','description','posted_by','time','teacher','student']);
+        return Inertia::render('Admin/Allnotice',compact('notice'));
     }
 
-     public function deletenotice($id)
+    public function deletenotice($id)
     {
-         Notice::where('id',$id)->delete();
+        Notice::where('id',$id)->delete();
         return Redirect::back()->with('success', 'Notice deleted successfully');
     }
 
     public function updatenotice(Request $request)
     {
-            $newdata = $request->data;
+        $newdata = $request->data;
 
-            $notice = Notice::find($newdata['id']);
-            $notice->title = $newdata['title'];
-            $notice->description = $newdata['description'];
-            $notice->posted_by = $newdata['posted_by'];
-            $notice->time = $newdata['time'];
-            $notice->teacher = $newdata['teacher'];
-            $notice->student = $newdata['student'];
-            $notice->save();
-       return Redirect::back()->with('success', 'Notice updated successfully');
+        $notice = Notice::find($newdata['id']);
+        $notice->title = $newdata['title'];
+        $notice->description = $newdata['description'];
+        $notice->posted_by = $newdata['posted_by'];
+        $notice->time = $newdata['time'];
+        $notice->teacher = $newdata['teacher'];
+        $notice->student = $newdata['student'];
+        $notice->save();
+        return Redirect::back()->with('success', 'Notice updated successfully');
     }
 
 }
