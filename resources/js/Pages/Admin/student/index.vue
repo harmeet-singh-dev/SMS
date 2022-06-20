@@ -143,6 +143,7 @@
                                     <div class="col-lg-6 col-12 form-group mg-t-30">
                                         <label class="text-dark-medium">Upload Student Photo (150px X 150px)</label>
                                         <input accept="image/*" type="file" @input="form.photo = $event.target.files" />
+                                        <span v-if="errors.photo" class="text-danger">{{errors.photo}}</span>
                                     </div>
                                 </div>
 
@@ -453,7 +454,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(data,index) in students" :key="index">
+                            <tr v-for="(data,index) in students.data" :key="index">
                                 <!--tr v-for="Classes in Data" :key="Classes"-->
                                 <td>
                                     <div class="form-check">
@@ -489,6 +490,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <pagination class="mt-6" :links="students.links" />
                 </div>
             </div>
         </div>
@@ -502,6 +504,7 @@
 import Header from '@/Pages/Admin/Header.vue'
 import Nav from '@/Pages/Admin/Nav.vue'
 import Footer from '@/Pages/Admin/Footer.vue'
+import Pagination from '@/Shared/Pagination'
 
 export default {
     props: {
@@ -524,6 +527,7 @@ export default {
         HeaderComponant: Header,
         NavComponant: Nav,
         FooterComponant: Footer,
+        Pagination,
     },
     methods: {
         onChange(id, checked, type) {
@@ -548,7 +552,6 @@ export default {
             //show update popup
             this.form.post(`/student/${this.form.id}`, {
                 onSuccess: () =>  this.showUpdateModal = false,
-                onError: (errors) => this.errors = errors,
             });
 
         },

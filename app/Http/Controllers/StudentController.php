@@ -25,7 +25,7 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $students = Student::where('organisation_id',$user->organisation_id)
-            ->whereHas('user')->with('user')->get();
+            ->whereHas('user')->with('user')->paginate(10);
 
         $Classes = Classes::where('organisation_id', $user->organisation_id)
             ->get();
@@ -247,7 +247,6 @@ class StudentController extends Controller
             'state' => 'required',
             'country' => 'required',
             'pincode' => 'required',
-            'photo' => ['nullable', 'image'],
         ]);
 
         $student->update($data);

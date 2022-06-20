@@ -440,7 +440,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(data,index) in teachers" :key="index">
+                            <tr v-for="(data,index) in teachers.data" :key="index">
                                 <!--tr v-for="Classes in Data" :key="Classes"-->
                                 <td>
                                     <div class="form-check">
@@ -475,6 +475,8 @@
 
                             </tbody>
                         </table>
+
+                        <pagination class="mt-6" :links="teachers.links" />
                     </div>
                 </div>
             </div>
@@ -489,6 +491,7 @@
 import Header from '@/Pages/Admin/Header.vue'
 import Nav from '@/Pages/Admin/Nav.vue'
 import Footer from '@/Pages/Admin/Footer.vue'
+import Pagination from '@/Shared/Pagination'
 
 export default {
     props: {
@@ -510,6 +513,7 @@ export default {
         HeaderComponant: Header,
         NavComponant: Nav,
         FooterComponant: Footer,
+        Pagination,
     },
     methods: {
         onChange(id, checked, type) {

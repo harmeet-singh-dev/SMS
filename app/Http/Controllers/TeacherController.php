@@ -25,7 +25,7 @@ class TeacherController extends Controller
         $user = Auth::user();
         $Department = Department::where('organisation_id', '=', $user->organisation_id)->get();
         $teachers = Teacher::where('organisation_id',$user->organisation_id)
-            ->whereHas('user')->with('user')->get();
+            ->whereHas('user')->with('user')->paginate(10);
         return Inertia::render('Admin/teacher/index', ['teachers' => $teachers,'Departmentdata' => $Department]);
     }
 
@@ -212,7 +212,6 @@ class TeacherController extends Controller
             'country' => 'required',
             'pincode' => 'required',
             'description' => 'string|nullable',
-            'photo' => ['nullable', 'image'],
 
         ]);
 
