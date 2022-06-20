@@ -8,6 +8,9 @@ use Inertia\Inertia;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\AdminnewController;
+use App\Http\Controllers\FeeController;
+use App\Http\Controllers\ClassController;
+use App\Http\Controllers\SectionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +22,9 @@ use App\Http\Controllers\AdminnewController;
 |
 */
 
+Route::get('/123' , function(){
+    dd(bcrypt("123456"));
+});
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -83,5 +89,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/all-notice-destroy/destroy/{id}',[AdminnewController::class, 'deletenotice'])->name('all-notice-destroy');
     Route::post('/notice-update/update/{user}',[AdminnewController::class, 'updatenotice'])->name('class-notice');
 
-
+    Route::post('/feespost',[FeeController::class,'addStudentFee']);
+    Route::get('/get-all-classes',[ClassController::class , 'getAllClasses']);
+    Route::get('/get-all-sections',[SectionController::class , 'getAllSectons']);
+    Route::get('/fetch-students' , [StudentController::class , 'getStudents']);
 });

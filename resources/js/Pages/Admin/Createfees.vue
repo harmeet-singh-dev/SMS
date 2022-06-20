@@ -248,29 +248,27 @@
                             <div class="row">
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Select Class Name *</label>
-                                    <select name="class_name" id="class_name">
-                                    <optgroup label="Select Class Name">
-                                    
-                                       
+                                    <select name="class_name" id="class_name" v-model="form.className">
+                                    <optgroup label="Select Class Name" >
+                                           <option v-for="(classObj,index) in allClasses" :key="index" :value="classObj.id">{{classObj.class_name}}</option> 
                                         </optgroup>
                                     </select>
                                 </div>
 
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Select Section Name *</label>
-                                     <select name="section_name" id="section_name">
+                                     <select name="section_name" id="section_name" v-model="form.sectionName">
                                      <optgroup label="Select Section Name">
-                                   
-                                     
+                                        <option v-for="(section,index) in allSections" :key="index" :value="section.id">{{section.section_name}}</option> 
                                         </optgroup>
                                     </select>
                                 </div>
 
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Student Name *</label>
-                                    <select name="student_name" id="student_name">
+                                    <select name="student_name" id="student_name" v-model="form.studentName">
                                       <optgroup label="Select Student Name">
-                                       <option value=""></option>
+                                       <option v-for="(student,index) in students" :key="index" :value="student.id">{{student.user.first_name}} {{student.user.last_name}}</option> 
                                       
                                        </optgroup>
                                     </select>
@@ -278,7 +276,7 @@
 
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Father Name *</label>
-                                    <select name="father_name" id="father_name">
+                                    <select name="father_name" id="father_name" v-model="form.fatherName">
                                       <optgroup label="Select Father Name">
                                        <option value=""></option>
                                       
@@ -288,7 +286,7 @@
 
                                  <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Payment Mode *</label>
-                                    <select name="payment_mode">
+                                    <select name="payment_mode" v-model="form.paymentMethod">
                                       <optgroup label="Select Payment Mode">
                                        <option value="cash">Cash</option>
                                        <option value="bank_deposit">Bank Deposit</option>
@@ -302,76 +300,81 @@
 
                                  <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Receipt Number</label>
-                                <input type="text" name="receipt_number">   
+                                <input type="text" name="receipt_number" v-model="form.receiptNumber">   
                                 </div>
 
                                 
 
                                   <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Fees Submission Date *</label>
-                                <input type="date" name="receipt_number">   
+                                <input type="date" name="receipt_number" v-model="form.feesSubmitionDate">   
                                 </div>
 
                                  <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Admission Fees</label>
-                                <input type="text" name="admission_fees">   
+                                <input type="text" name="admission_fees"  v-model="form.addmissionFee">   
                                 </div>
-
                                  <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Tuition Fees</label>
-                                <input type="text" name="tuition_fees">   
+                                <input type="text" name="tuition_fees" v-model="form.tutuionFee">   
                                 </div>
 
                                  <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Sports Fees</label>
-                                <input type="text" name="sports_fees">   
+                                <input type="text" name="sports_fees"  v-model="form.sportsFee">    
                                 </div>
 
                                  <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Hostel Fees</label>
-                                <input type="text" name="hostel_fees">   
+                                <input type="text" name="hostel_fees" v-model="form.hostelFee">   
                                 </div>
 
                                  <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Food Fees</label>
-                                <input type="text" name="food_fees">   
+                                <input type="text" name="food_fees"  v-model="form.foodFee">   
                                 </div>
 
                                  <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Transportation Fees</label>
-                                <input type="text" name="transportation_fees">   
+                                <input type="text" name="transportation_fees" v-model="form.transpotationFee">   
                                 </div>
 
                                  <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Activity Fees</label>
-                                <input type="text" name="activity_fees">   
+                                <input type="text" name="activity_fees" v-model="form.activityFees">   
                                 </div>
 
                                  <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Extra Class Fees</label>
-                                <input type="text" name="extra_class_fees">   
+                                <input type="text" name="extra_class_fees" v-model="form.extraClassFees">   
                                 </div>
 
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Other</label>
-                                <input type="text" name="other">   
+                                <input type="text" name="other" v-model="form.others">   
                                 </div>
 
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Penality</label>
-                                <input type="text" name="penality">   
+                                <input type="text" name="penality" v-model="form.penality">   
                                 </div>
                                 
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Pending Dues</label>
-                                <input type="text" name="pending_dues">   
+                                <input type="text" name="pending_dues" v-model="form.pendingDue">   
                                 </div>
-
-                                  <div class="col-xl-3 col-lg-6 col-12 form-group">
+                                <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Total Fees*</label>
-                                <input type="text" name="total_fees">   
+                                <input type="text" name="total_fees" v-model="form.totalFee">   
                                 </div>
-                               
+                                <div class="col-xl-3 col-lg-6 col-12 form-group">
+                                    <label>Fee Date</label>
+                                    <Datepicker v-model="form.feeDate" :enableTimePicker="false"></Datepicker>
+                                </div>
+                                <div class="col-xl-3 col-lg-6 col-12 form-group">
+                                    <label>Notes*</label>
+                                        <textarea type="text" name="note" class="form-group" v-model="form.note">    </textarea>
+                                </div>
                                 <div class="col-12 form-group mg-t-8">
                                     <button type="submit" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Save</button>
                                         </div>
@@ -392,51 +395,131 @@
 import Footer from '@/Pages/Admin/Footer.vue'
 import Header from '@/Pages/Admin/Header.vue'
 import Nav from '@/Pages/Admin/Nav.vue'
-
-
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+import { ref } from 'vue';
 
 export default {
+
+    setup() {
+        const date = ref(new Date());
+        // In case of a range picker, you'll receive [Date, Date]
+        const format = (date) => {
+            // const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+
+            return `Selected date is ${day}/${month}/${year}`;
+        }
+
+        return {
+            date,
+            format,
+        }
+    },
      props:{
          errors: Object,
      },
     components: {
         FooterComponant: Footer,
         HeaderComponant: Header,
-        NavComponant: Nav
+        NavComponant: Nav,
+        Datepicker
     },
 
+    mounted(){
+        this.fetchClass();
+        this.fetchSections();
+    },
     data() {
         return {
-            
-              form:{
-                    name:'',   
-                },
-                errors:{},
+            form:{
+                className:'',   
+                sectionName:'',   
+                studentName:'',   
+                fatherName:'',   
+                paymentMethod:'',   
+                receiptNumber:'',   
+                feesSubmitionDate:'',   
+                addmissionFee:'',   
+                tutuionFee:'',   
+                tutuionFee:'',   
+                sportsFee:'',   
+                hostelFee:'',   
+                foodFee:'',   
+                transpotationFee:'',   
+                activityFees:'',   
+                extraClassFees:'',   
+                others:'',   
+                penality:'',   
+                pendingDue:'',   
+                totalFee:'',   
+                feeDate:ref(new Date()),  
+                note:'' 
+            },
+            allClasses:[],
+            allSections:[],
+            students:[],
+            errors:{},
             
         }
     },
-          methods: {
+        methods: {
+            fetchClass(){
+                axios.get('get-all-classes')
+                .then(res =>{
+                    this.allClasses = res.data
+                })
+            },
+            fetchSections(){
+                  axios.get('get-all-sections')
+                .then(res =>{
+                    this.allSections = res.data
+                }) 
+            },
             submit() {
               this.errors = {};
               axios.post('feespost',this.form)
               .then(res=>{
-                  console.log(res.data);
-                 
-                  this.form={};
-                  Toast.fire({
-                    icon:'success',
-                   title:'Fees is deposited !!!'
-                 })
-              }).catch((error) => {
-                  this.errors = error.response.data.errors
-                    
-                    });
+                    this.form={};
+                    Toast.fire({
+                        icon:'success',
+                        title:'Fees is deposited !!!'
+                    })
+            }).catch((error) => {
+                this.errors = error.response.data.errors
+            });
                    
            }, 
-           
- 
-           
-}
+           fetchStudent(){
+            if(this.form.className && this.form.sectionName){
+                     axios.get('fetch-students',{
+                        params:{
+                            classId: this.form.className,
+                            sectionId: this.form.sectionName,
+                        }
+                     })
+                .then(res=>{
+                    this.students = res.data;                       
+                }).catch((error) => {
+                    this.errors = error.response.data.errors
+                });
+            }
+           }
+        },
+        watch:{
+            'form.className'(newVal){
+                this.fetchStudent();
+            },
+            'form.sectionName'(newVal){
+                this.fetchStudent();
+            },
+            'form.studentName'(newVal){
+                console.log(this.students , "student")
+            }
+
+            
+        }
 }
 
 </script>
