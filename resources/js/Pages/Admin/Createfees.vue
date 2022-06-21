@@ -369,7 +369,7 @@
                                 </div>
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Fee Date</label>
-                                    <Datepicker v-model="form.feeDate" :enableTimePicker="false"></Datepicker>
+                                   
                                 </div>
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Notes*</label>
@@ -395,8 +395,7 @@
 import Footer from '@/Pages/Admin/Footer.vue'
 import Header from '@/Pages/Admin/Header.vue'
 import Nav from '@/Pages/Admin/Nav.vue'
-import Datepicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css'
+
 import { ref } from 'vue';
 
 export default {
