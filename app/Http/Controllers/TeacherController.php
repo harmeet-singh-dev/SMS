@@ -25,8 +25,17 @@ class TeacherController extends Controller
         $user = Auth::user();
         $Department = Department::where('organisation_id', '=', $user->organisation_id)->get();
         $teachers = Teacher::where('organisation_id',$user->organisation_id)
-            ->whereHas('user')->with('user')->paginate(10);
-        return Inertia::render('Admin/teacher/index', ['teachers' => $teachers,'Departmentdata' => $Department]);
+            ->filter(request()->only('search'))
+            ->whereHas('user')
+            ->with('user')
+            ->paginate(10)
+            ->withQueryString();
+
+        return Inertia::render('Admin/teacher/index', [
+            'teachers' => $teachers,
+            'Departmentdata' => $Department,
+            'filters' =>  request()->all('search'),
+        ]);
     }
 
     /**

@@ -438,6 +438,25 @@
 
                     </div>
 
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" v-model="indexForm.search" placeholder="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="text-right">
+                                <a href="/student/create" class="btn btn-primary"><i
+                                    class="fas fa-plus"></i> Add Student</a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="table-responsive">
                         <table class="table display data-table text-nowrap">
                             <thead>
@@ -505,6 +524,8 @@ import Header from '@/Pages/Admin/Header.vue'
 import Nav from '@/Pages/Admin/Nav.vue'
 import Footer from '@/Pages/Admin/Footer.vue'
 import Pagination from '@/Shared/Pagination'
+import throttle from "lodash/throttle";
+import pickBy from "lodash/pickBy";
 
 export default {
     props: {
@@ -512,10 +533,14 @@ export default {
         'students': {},
         'Classesdata':{},
         'Sectiondata':{},
+        filters: Object,
     },
     data() {
         return {
             showUpdateModal: false,
+            indexForm: {
+                search: this.filters.search,
+            },
             form : this.$inertia.form({
                 _method: 'put',
             }),
@@ -528,6 +553,14 @@ export default {
         NavComponant: Nav,
         FooterComponant: Footer,
         Pagination,
+    },
+
+    watch: {
+        'indexForm.search': {
+            handler: throttle(function () {
+                this.$inertia.get('/student', pickBy(this.indexForm), { preserveState: true })
+            }, 150),
+        },
     },
     methods: {
         onChange(id, checked, type) {
