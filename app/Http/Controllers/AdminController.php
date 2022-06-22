@@ -11,6 +11,7 @@ use App\Models\Student;
 use App\Models\Department;
 use App\Models\Subject;
 use App\Models\Teacher;
+use App\Models\ClassTeacher;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -221,12 +222,8 @@ class AdminController extends Controller
 
     public function class_teacher()
     {
-        $id = Auth::user()->id;
-        $users = User::find($id);
+        $id = Auth::user()->organisation_id;
 
-        if($users['user_type'] == '1' || $users['user_type'] == '2'){
-
-            if($users['organisation_id']== 0){
                 $teacher = User::where('organisation_id',$id)
                     ->where('user_type','4')
                     ->select('id','first_name','last_name')
@@ -242,29 +239,7 @@ class AdminController extends Controller
                     ->get();
 
                 return Inertia::render('Admin/Createclassteacher',['classdata'=>$class,'sectiondata'=>$section,'teacherdata'=>$teacher,'departmentdata'=>$department]);
-            }else{
 
-                $teacher = User::where('organisation_id',$users['organisation_id'])
-                    ->where('user_type','4')
-                    ->select('id','first_name','last_name')
-                    ->get();
-                $class = Classes::where('organisation_id',$users['organisation_id'])
-                    ->select('id','class_name')
-                    ->get();
-                $section = Section::where('organisation_id',$users['organisation_id'])
-                    ->select('id','section_name')
-                    ->get();
-                $department = Department::where('organisation_id',$id)
-                    ->select('id','department_name')
-                    ->get();
-
-
-                return Inertia::render('Admin/Createclassteacher',['classdata'=>$class,'sectiondata'=>$section,'teacherdata'=>$teacher,'departmentdata'=>$department]);
-            }
-        }
-        else{
-            return Inertia::render('/');
-        }
     }
 
     public function subject()
@@ -308,8 +283,15 @@ class AdminController extends Controller
         return Inertia::render('Admin/Createfees');
     }
 
-    public function classteacherpost()
+    public function classteacherpost(Request $request)
     {
-
+        $id = Auth::user()->organisation_id;
+       ClassTeacher::create([
+                    'organisation_id' => $id,
+                    'teacher_id'=>$request->get('teacher_name'),
+                    'class_id'=>$request->get('class_name'),
+                    'section_id'=>$request->get('section_name'),
+                    'department_id'=>$request->get('department_name')
+                ]);
     }
 }

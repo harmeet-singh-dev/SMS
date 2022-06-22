@@ -250,7 +250,7 @@
                                    <div class="row">
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Teacher Name *</label>
-                                    <select class="select2" name="form.teacher">
+                                    <select class="select2" v-model="form.teacher_name">
                                         <option value="">Please Select Teacher *</option>
  <option v-for='(teacherdata,index) in teacherdata' :key="index" :value='teacherdata.id'>{{ teacherdata.first_name }} {{teacherdata.last_name}}</option>
                                     </select>
@@ -258,7 +258,7 @@
 
                                  <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Department Name *</label>
-                                    <select class="select2" name="gender">
+                                    <select class="select2" v-model="form.department_name">
                                         <option value="">Please Select Gender *</option>
   <option v-for='(departmentdata,index) in departmentdata' :key="index" :value='departmentdata.id'>{{ departmentdata.department_name }} </option>
 
@@ -267,7 +267,7 @@
 
                                  <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Class Name *</label>
-                                    <select class="select2" name="class_name">
+                                    <select class="select2" v-model="form.class_name">
                                         <option value="">Please Select *</option>
     <option v-for='(classdata,index) in classdata' :key="index" :value='classdata.id'>{{ classdata.class_name }} </option>
 
@@ -277,7 +277,7 @@
 
                                  <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Section Name *</label>
-                                    <select class="select2" name="section_name">
+                                    <select class="select2" v-model="form.section_name">
                                         <option value="">Please Select *</option>
 <option v-for='(sectiondata,index) in sectiondata' :key="index" :value='sectiondata.id'>{{ sectiondata.section_name }} </option>
 
@@ -327,12 +327,11 @@ export default {
         return {
 
               form:{
-                    title:'',
-                    posted_by:'',
-                    time:'',
-                    description:'',
-                    teacher:'',
-                    student:''
+                    teacher_name:'',
+                    department_name:'',
+                    class_name:'',
+                    section_name:''
+
                 },
                 errors:{},
 
@@ -341,13 +340,13 @@ export default {
           methods: {
             submit() {
               this.errors = {};
-              axios.post('noticepost',this.form)
+              axios.post('classteacherpost',this.form)
               .then(res=>{
                   console.log(res.data);
                   this.form={};
                   Toast.fire({
                     icon:'success',
-                   title:'New Notice is created !!!'
+                   title:'Class teacher is added !!!'
                  })
               }).catch((error) => {
                   this.errors = error.response.data.errors
