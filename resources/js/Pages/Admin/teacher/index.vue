@@ -405,12 +405,12 @@
         <div class="dashboard-content-one">
             <!-- Breadcubs Area Start Here -->
             <div class="breadcrumbs-area">
-                <h3>Student</h3>
+                <h3>Teacher</h3>
                 <ul>
                     <li>
                         <a href="index.html">Home</a>
                     </li>
-                    <li>Student</li>
+                    <li>Teacher</li>
                 </ul>
             </div>
             <!-- Breadcubs Area End Here -->
@@ -419,9 +419,28 @@
                 <div class="card-body">
                     <div class="heading-layout1">
                         <div class="item-title">
-                            <h3>Student Details</h3>
+                            <h3>Teacher Details</h3>
                         </div>
 
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" v-model="indexForm.search" placeholder="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="text-right">
+                                <a href="/student/create" class="btn btn-primary"><i
+                                    class="fas fa-plus"></i> Add Student</a>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="table-responsive">
@@ -492,20 +511,34 @@ import Header from '@/Pages/Admin/Header.vue'
 import Nav from '@/Pages/Admin/Nav.vue'
 import Footer from '@/Pages/Admin/Footer.vue'
 import Pagination from '@/Shared/Pagination'
+import throttle from "lodash/throttle";
+import pickBy from "lodash/pickBy";
 
 export default {
     props: {
         'teachers': {},
         errors: Object,
         'Departmentdata':{},
+        filters: Object,
     },
     data() {
         return {
             showUpdateModal: false,
+            indexForm: {
+                search: this.filters.search,
+            },
             form : this.$inertia.form({
                 _method: 'put',
             }),
         }
+    },
+
+    watch: {
+        'indexForm.search': {
+            handler: throttle(function () {
+                this.$inertia.get('/teacher', pickBy(this.indexForm), { preserveState: true })
+            }, 150),
+        },
     },
 
     components: {

@@ -25,13 +25,20 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $students = Student::where('organisation_id',$user->organisation_id)
-            ->whereHas('user')->with('user')->paginate(10);
+            ->filter(request()->only('search'))
+            ->whereHas('user')
+            ->with('user')
+            ->paginate(10)
+            ->withQueryString();
 
         $Classes = Classes::where('organisation_id', $user->organisation_id)
             ->get();
         $Section = Section::where('organisation_id', $user->organisation_id)
             ->get();
-        return Inertia::render('Admin/student/index', ['students' => $students,'Classesdata' => $Classes, 'Sectiondata' => $Section]);
+        return Inertia::render('Admin/student/index', [
+            'students' => $students, 'Classesdata' => $Classes, 'Sectiondata' => $Section,
+            'filters' => request()->all('search')
+        ]);
     }
 
     /**
