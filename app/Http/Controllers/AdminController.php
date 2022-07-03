@@ -55,19 +55,18 @@ class AdminController extends Controller
 
     public function subadminpro(Request $request)
     {
-        $id = Auth::user()->id;
-        $users = User::find($id);
+        $user_type = Auth::user()->user_type;
+         if($user_type == '1' || $user_type == '5'){
+        $organisation_id = Auth::user()->organisation_id;
 
-        if($users['user_type'] == '1' || $users['user_type'] == '5'){
-            $request->validate([
-                'first_name' => 'required',
-                'last_name' => 'required',
-                'email' => 'required',
+        $request->validate([
+                'first_name' => 'required|max:60',
+                'last_name' => 'required|max:60',
+                'email' => 'required|max:60',
             ]);
 
-            if($users['organisation_id']== 0){
                 User::create([
-                    'organisation_id' => $id,
+                    'organisation_id' => $organisation_id,
                     'user_type' => '5',
                     'first_name'=>$request->get('first_name'),
                     'last_name'=>$request->get('last_name'),
@@ -78,20 +77,8 @@ class AdminController extends Controller
                 return response()->json([
                     'success' => 'Done'
                 ]);
-            }else{
-                User::create([
-                    'organisation_id' => $users['organisation_id'],
-                    'user_type' => '5',
-                    'first_name'=>$request->get('first_name'),
-                    'last_name'=>$request->get('last_name'),
-                    'email'=>$request->get('email'),
-                    'password'=>bcrypt('12345678'),
-                ]);
 
-                return response()->json([
-                    'success' => 'Done'
-                ]);
-            }}else{
+        }else{
             return Inertia::render('/');
         }
     }

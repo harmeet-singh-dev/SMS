@@ -15,17 +15,16 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="first_name">First Name</label>
-                                    <input type="text" class="form-control" id="first_name"
-                                           v-model="updateData.first_name">
+                                    <label for="first_name">Class Name</label>
+
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">Last Name</label>
+                                    <label for="name">Section Name</label>
                                     <input type="text" class="form-control" id="last_name"
-                                           v-model="updateData.last_name">
+                                           v-model="form.section_name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Email</label>
+                                    <label for="email">Teacher Name</label>
                                     <input type="email" class="form-control" id="email" v-model="updateData.email">
                                 </div>
 
@@ -301,12 +300,12 @@
         <div class="dashboard-content-one">
             <!-- Breadcubs Area Start Here -->
             <div class="breadcrumbs-area">
-                <h3>Sub Admin</h3>
+                <h3>Class Routine</h3>
                 <ul>
                     <li>
                         <a href="index.html">Home</a>
                     </li>
-                    <li>Sub Admin</li>
+                    <li>Class Routine</li>
                 </ul>
             </div>
             <!-- Breadcubs Area End Here -->
@@ -315,7 +314,7 @@
                 <div class="card-body">
                     <div class="heading-layout1">
                         <div class="item-title">
-                            <h3>Sub Admin Details</h3>
+                            <h3>Class Routine Details</h3>
                         </div>
 
                     </div>
@@ -325,81 +324,43 @@
                             <thead>
                             <tr>
                                 <th>
-                                    <div class="form-check">
-
-                                        <label class="form-check-label">S. No.</label>
-                                    </div>
+                                 <label>S. No.</label>
                                 </th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Email</th>
-                                <th>Sub Admin</th>
-                                <th>Student</th>
-                                <th>Teacher</th>
-
-                                <th>Account</th>
-                                <th>Class</th>
-                                <th>Subject</th>
-                                <th>Class Routine</th>
-                                <th>Attendance</th>
-                                <th>Notice</th>
+                                <th>Class Name</th>
+                                <th>Section Name</th>
+                                <th>Teacher Name</th>
+                                <th>Subject Name</th>
+                                <th>Period Time</th>
+                                <th>Break Time</th>
+                                <th>Date</th>
+                                <th>Monday</th>
+                                <th>Tuesday</th>
+                                <th>Wednesday</th>
+                                <th>Thursday</th>
+                                <th>Friday</th>
+                                <th>Saturday</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(data,index) in sub_admins" :key="index">
-                                <!--tr v-for="Classes in Data" :key="Classes"-->
-                                <td>
-                                    <div class="form-check">
 
-                                        <label class="form-check-label">{{ index + 1 }}</label>
-                                    </div>
-                                </td>
+                             <tr v-for="(user,index) in classroutine.data" :key="index">
+                               <td>
+                              <label>{{ index + 1 }}</label>
+                               </td>
 
-                                <td>{{ data.first_name }}</td>
-                                <td>{{ data.last_name }}</td>
-                                <td>{{ data.email }}</td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'sub_admin')"
-                                    type="checkbox"
-                                    :checked="data.permission.sub_admin">
-                                </td>
-                                <td><input
-                                  @change="onChange(data.id,$event.target.checked,'student')"
-                                    :checked="data.permission.student"
-                                    type="checkbox"></td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'teacher')"
-                                    :checked="data.permission.teacher"
-                                    type="checkbox"></td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'parent')"
-                                    :checked="data.permission.parent"
-                                    type="checkbox"></td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'account')"
-                                    :checked="data.permission.account"
-                                    type="checkbox"></td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'class')"
-                                    :checked="data.permission.class"
-                                    type="checkbox"></td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'subject')"
-                                    :checked="data.permission.subject"
-                                    type="checkbox"></td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'class_routine')"
-                                    :checked="data.permission.class_routine"
-                                    type="checkbox"></td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'attendance')"
-                                    :checked="data.permission.attendance"
-                                    type="checkbox"></td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'notice')"
-                                    :checked="data.permission.notice"
-                                    type="checkbox"></td>
-
+                                <td>{{ user.class_name }}</td>
+                                <td>{{ user.section_name }}</td>
+                                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                                <td>{{ user.subject_name }}</td>
+                                <td>{{ user.start_time }} to {{ user.end_time }}</td>
+                                <td>{{ user.start_break }} to {{ user.end_break }}</td>
+                                <td>{{ user.date }}</td>
+                                  <td>{{ user.monday }}</td>
+                                  <td>{{ user.tuesday }}</td>
+                                  <td>{{ user.wednesday }}</td>
+                                  <td>{{ user.thursday }}</td>
+                                  <td>{{ user.friday }}</td>
+                                  <td>{{ user.saturday }}</td>
 
                                 <td>
                                     <div class="dropdown">
@@ -409,9 +370,9 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
 
-                                            <a class="dropdown-item" @click="showUpdate(data)"><i
+                                            <a class="dropdown-item" @click="showUpdate(user)"><i
                                                 class="fas fa-cogs text-dark-pastel-green"></i> Edit</a>
-                                            <button class="dropdown-item" @click="destroy(data.id)"><i
+                                            <button class="dropdown-item" @click="destroy(user.id)"><i
                                                 class="fas fa-times text-orange-red"></i> Delete
                                             </button>
                                         </div>
@@ -419,10 +380,9 @@
                                 </td>
                             </tr>
 
-
                             </tbody>
                         </table>
-                    </div>
+                        <pagination class="mt-6" :links="classroutine.links" />  </div>
                 </div>
             </div>
         </div>
@@ -436,10 +396,12 @@
 import Header from '@/Pages/Admin/Header.vue'
 import Nav from '@/Pages/Admin/Nav.vue'
 import Footer from '@/Pages/Admin/Footer.vue'
+import Pagination from '@/Shared/Pagination'
+
 
 export default {
     props: {
-        'sub_admins': {},
+        'classroutine': {},
     },
     data() {
         return {
@@ -453,6 +415,7 @@ export default {
         HeaderComponant: Header,
         NavComponant: Nav,
         FooterComponant: Footer,
+         Pagination,
 
     },
     methods: {
@@ -467,8 +430,10 @@ export default {
 
         },
         showUpdate(data) {
+             //append method put to data
+            data._method = 'put';
             //show update popup
-            this.updateData = data;
+            this.form = this.$inertia.form(data);
             this.showUpdateModal = true;
 
         },
@@ -483,7 +448,7 @@ export default {
             //show delete alert
             //if user confirm delete
             if (confirm('Are you sure you want to delete this?')) {
-                this.$inertia.post(`/all-sub-admin/destroy/${id}`);
+                this.$inertia.post(`/class-routine-destroy/destroy/${id}`);
             }
         },
     }

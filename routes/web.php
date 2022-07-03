@@ -22,9 +22,9 @@ use App\Http\Controllers\SectionController;
 |
 */
 
-Route::get('/123' , function(){
-    dd(bcrypt("123456"));
-});
+//Route::get('/123' , function(){
+  //  dd(bcrypt("123456"));
+//});
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -93,4 +93,13 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/get-all-classes',[ClassController::class , 'getAllClasses']);
     Route::get('/get-all-sections',[SectionController::class , 'getAllSectons']);
     Route::get('/fetch-students' , [StudentController::class , 'getStudents']);
+
+    Route::get('/all-class-teacher',[ClassController::class , 'allclassteacher'])->name('all-class-teacher');
+    Route::post('/class-teacher-destroy/destroy/{id}',[ClassController::class, 'deleteclassteacher'])->name('class-teacher-destroy');
+
+    Route::get('/class-routine',[ClassController::class , 'createclassroutine'])->name('class-routine');
+    Route::post('/routinepost',[ClassController::class, 'routinepost'])->name('routinepost');
+    Route::get('/all-class-routine',[ClassController::class , 'allclassroutine'])->name('all-class-routine');
+    Route::post('/class-routine-destroy/destroy/{id}',[ClassController::class, 'deleteroutine'])->name('class-routine-destroy');
+
 });

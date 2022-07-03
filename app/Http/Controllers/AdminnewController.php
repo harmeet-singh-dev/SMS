@@ -13,7 +13,6 @@ use App\Models\Subject;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
 use Auth;
 
 class AdminnewController extends Controller
@@ -25,7 +24,8 @@ class AdminnewController extends Controller
             ->where('user_type', '=', 5)
             ->with('permission')
             ->get(['id', 'first_name', 'last_name', 'email']);
-
+          //  ->paginate(10);
+//dd($sub_admins);
         //loop through the sub admin and check if permission is set
         foreach ($sub_admins as $sub_admin) {
             if ($sub_admin->permission === null) {

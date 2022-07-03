@@ -47,29 +47,21 @@ class StudentController extends Controller
      * @return \Inertia\Response
      */
     public function create()
-    {
+    {   
         $id = Auth::user()->id;
-        $users = User::find($id);
-        if ($users['user_type'] == '1' || $users['user_type'] == '2') {
-            if ($users['organisation_id'] == 0) {
+        $organisation_id = Auth::user()->organisation_id;
+        $user_type = Auth::user()->user_type;
+        if ($user_type == '1' || $user_type == '5') {
+          
                 $users = User::find($id);
-                $Classes = Classes::where('organisation_id', '=', $id)
+                $Classes = Classes::where('organisation_id', '=', $organisation_id)
                     ->get();
-                $Section = Section::where('organisation_id', '=', $id)
-                    ->get();
-                return Inertia::render('Admin/Createstudent', ['Classesdata' => $Classes, 'Sectiondata' => $Section]);
-
-            } else {
-
-                $users = User::find($id);
-                $Classes = Classes::where('organisation_id', '=', $users['organisation_id'])
-                    ->get();
-                $Section = Section::where('organisation_id', '=', $users['organisation_id'])
+                $Section = Section::where('organisation_id', '=', $organisation_id)
                     ->get();
                 return Inertia::render('Admin/student/create', ['Classesdata' => $Classes, 'Sectiondata' => $Section]);
 
             }
-        } else {
+         else {
             return Inertia::render('/');
         }
     }
@@ -83,8 +75,9 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $id = Auth::user()->id;
-        $users = User::find($id);
-        if ($users['user_type'] == '1' || $users['user_type'] == '2') {
+        $organisation_id = Auth::user()->organisation_id;
+        $user_type = Auth::user()->user_type;
+        if ($user_type == '1' || $user_type == '5') {
             $request->validate([
                 'first_name' => 'required',
                 'unique_id' => 'required',
@@ -109,18 +102,14 @@ class StudentController extends Controller
                 'photo' => ['nullable', 'image'],
             ]);
 
-
-
-            if ($users['organisation_id'] == 0) {
-
                 $users = User::find($id);
-                $classes = Classes::where('organisation_id', '=', $id)
+                $classes = Classes::where('organisation_id', '=', $organisation_id)
                     ->get(['name']);
-                $section = Section::where('organisation_id', '=', $id)
+                $section = Section::where('organisation_id', '=', $organisation_id)
                     ->get(['section_name']);
 
                 $user = User::create([
-                    'organisation_id' => $id,
+                    'organisation_id' => $organisation_id,
                     'user_type' => '2',
                     'first_name' => $request->get('first_name'),
                     'last_name' => $request->get('last_name'),
@@ -130,51 +119,7 @@ class StudentController extends Controller
                 $lastinsertid = $user->id;
 
                 Student::create([
-                    'organisation_id' => $id,
-                    'user_id' => $lastinsertid,
-                    'unique_id' => $request->get('unique_id'),
-                    'gender' => $request->get('gender'),
-                    'dob' => $request->get('dob'),
-                    'roll' => $request->get('roll'),
-                    'blood_group' => $request->get('blood_group'),
-                    'religion' => $request->get('religion'),
-                    'class' => $request->get('classname'),
-                    'section' => $request->get('section'),
-                    'admission' => $request->get('admission'),
-                    'phone' => $request->get('phone'),
-                    'address' => $request->get('address'),
-                    'city' => $request->get('city'),
-                    'state' => $request->get('state'),
-                    'pincode' => $request->get('pincode'),
-                    'country' => $request->get('country'),
-                    'father_name' => $request->get('father_name'),
-                    'mother_name' => $request->get('mother_name'),
-                    'photo' => $request->file('photo') ? $request->file('photo')->store('students') : '',
-
-                ]);
-                return redirect()->route('student.index')->with('success', 'Student Created Successfully');
-
-
-            } else {
-
-                $users = User::find($id);
-                $classes = Classes::where('organisation_id', '=', $users['organisation_id'])
-                    ->get(['name']);
-                $section = Section::where('organisation_id', '=', $users['organisation_id'])
-                    ->get(['section_name']);
-
-                $user = User::create([
-                    'organisation_id' => $users['organisation_id'],
-                    'user_type' => '2',
-                    'first_name' => $request->get('first_name'),
-                    'last_name' => $request->get('last_name'),
-                    'email' => $request->get('email'),
-                    'password' => bcrypt('12345678'),
-                ]);
-                $lastinsertid = $user->id;
-
-                Student::create([
-                    'organisation_id' => $users['organisation_id'],
+                    'organisation_id' => $organisation_id,
                     'user_id' => $lastinsertid,
                     'gender' => $request->get('gender'),
                     'unique_id' => $request->get('unique_id'),
@@ -199,7 +144,7 @@ class StudentController extends Controller
                 return redirect()->route('student.index')->with('success', 'Student Created Successfully');
 
             }
-        } else {
+         else {
             return Inertia::render('/');
 
         }

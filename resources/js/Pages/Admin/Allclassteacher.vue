@@ -1,6 +1,6 @@
 <template>
-    <header-componant/>
-    <nav-componant/>
+    <header-componant />
+    <nav-componant />
     <div v-if="showUpdateModal">
         <transition name="modal">
             <div class="modal-mask">
@@ -8,26 +8,18 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Update Sub Admin</h5>
+                                <h5 class="modal-title">Update Section Name</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true" @click="showUpdateModal = false">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="first_name">First Name</label>
-                                    <input type="text" class="form-control" id="first_name"
-                                           v-model="updateData.first_name">
+                                    <label for="first_name">Section Name</label>
+                                    <input type="text" class="form-control" id="subject_name"
+                                           v-model="updateData.section_name" >
                                 </div>
-                                <div class="form-group">
-                                    <label for="name">Last Name</label>
-                                    <input type="text" class="form-control" id="last_name"
-                                           v-model="updateData.last_name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" class="form-control" id="email" v-model="updateData.email">
-                                </div>
+
 
                             </div>
                             <div class="modal-footer">
@@ -54,8 +46,7 @@
             <div class="sidebar-menu-content">
                 <ul class="nav nav-sidebar-menu sidebar-toggle-view">
                     <li class="nav-item sidebar-nav-item">
-                        <a href="/dashboard" class="nav-link"><i
-                            class="flaticon-dashboard"></i><span>Dashboard</span></a>
+                        <a href="/dashboard" class="nav-link"><i class="flaticon-dashboard"></i><span>Dashboard</span></a>
 
                     </li>
                     <li class="nav-item sidebar-nav-item">
@@ -194,8 +185,7 @@
                                     Class Teacher</a>
                             </li>
                             <li class="nav-item">
-                                <a href="class-teacher" class="nav-link"><i class="fas fa-angle-right"></i>Assign new
-                                    class teacher</a>
+                                <a href="class-teacher" class="nav-link"><i class="fas fa-angle-right"></i>Assign new class teacher</a>
                             </li>
                         </ul>
                     </li>
@@ -204,7 +194,7 @@
                             class="flaticon-maths-class-materials-cross-of-a-pencil-and-a-ruler"></i><span>Subject Name</span></a>
                         <ul class="nav sub-group-menu">
                             <li class="nav-item">
-                                <a href="all-class.html" class="nav-link"><i class="fas fa-angle-right"></i>All
+                                <a href="all-subject" class="nav-link"><i class="fas fa-angle-right"></i>All
                                     Subject</a>
                             </li>
                             <li class="nav-item">
@@ -246,8 +236,7 @@
                         <a href="#" class="nav-link"><i class="flaticon-script"></i><span>Notice</span></a>
                         <ul class="nav sub-group-menu">
                             <li class="nav-item">
-                                <a href="exam-schedule.html" class="nav-link"><i class="fas fa-angle-right"></i>All
-                                    Notices</a>
+                                <a href="exam-schedule.html" class="nav-link"><i class="fas fa-angle-right"></i>All Notices</a>
                             </li>
                             <li class="nav-item">
                                 <a href="notice" class="nav-link"><i class="fas fa-angle-right"></i>Add Notice</a>
@@ -274,8 +263,7 @@
                                 <a href="modal.html" class="nav-link"><i class="fas fa-angle-right"></i>Modal</a>
                             </li>
                             <li class="nav-item">
-                                <a href="progress-bar.html" class="nav-link"><i class="fas fa-angle-right"></i>Progress
-                                    Bar</a>
+                                <a href="progress-bar.html" class="nav-link"><i class="fas fa-angle-right"></i>Progress Bar</a>
                             </li>
                             <li class="nav-item">
                                 <a href="ui-tab.html" class="nav-link"><i class="fas fa-angle-right"></i>Tab</a>
@@ -297,16 +285,17 @@
                 </ul>
             </div>
         </div>
+
         <!-- Sidebar Area End Here -->
         <div class="dashboard-content-one">
             <!-- Breadcubs Area Start Here -->
             <div class="breadcrumbs-area">
-                <h3>Sub Admin</h3>
+                <h3>Section</h3>
                 <ul>
                     <li>
                         <a href="index.html">Home</a>
                     </li>
-                    <li>Sub Admin</li>
+                    <li>All Section</li>
                 </ul>
             </div>
             <!-- Breadcubs Area End Here -->
@@ -315,7 +304,7 @@
                 <div class="card-body">
                     <div class="heading-layout1">
                         <div class="item-title">
-                            <h3>Sub Admin Details</h3>
+                            <h3>All Section</h3>
                         </div>
 
                     </div>
@@ -323,101 +312,51 @@
                     <div class="table-responsive">
                         <table class="table display data-table text-nowrap">
                             <thead>
-                            <tr>
+                            <tr >
                                 <th>
                                     <div class="form-check">
-
+                                        <input type="checkbox" class="form-check-input checkAll">
                                         <label class="form-check-label">S. No.</label>
                                     </div>
                                 </th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
+                                <th>Teacher First Name</th>
+                                <th>Second Name</th>
                                 <th>Email</th>
-                                <th>Sub Admin</th>
-                                <th>Student</th>
-                                <th>Teacher</th>
-
-                                <th>Account</th>
-                                <th>Class</th>
-                                <th>Subject</th>
-                                <th>Class Routine</th>
-                                <th>Attendance</th>
-                                <th>Notice</th>
+                                <th>Department Name</th>
+                                <th>Class Name</th>
+                                <th>Section Name</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(data,index) in sub_admins" :key="index">
+                            <tr v-for="(data,index) in teacherdata" :key="index">
                                 <!--tr v-for="Classes in Data" :key="Classes"-->
                                 <td>
                                     <div class="form-check">
-
-                                        <label class="form-check-label">{{ index + 1 }}</label>
+                                        <input type="checkbox" class="form-check-input">
+                                        <label class="form-check-label">{{index+1}}</label>
                                     </div>
                                 </td>
-
-                                <td>{{ data.first_name }}</td>
-                                <td>{{ data.last_name }}</td>
-                                <td>{{ data.email }}</td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'sub_admin')"
-                                    type="checkbox"
-                                    :checked="data.permission.sub_admin">
-                                </td>
-                                <td><input
-                                  @change="onChange(data.id,$event.target.checked,'student')"
-                                    :checked="data.permission.student"
-                                    type="checkbox"></td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'teacher')"
-                                    :checked="data.permission.teacher"
-                                    type="checkbox"></td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'parent')"
-                                    :checked="data.permission.parent"
-                                    type="checkbox"></td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'account')"
-                                    :checked="data.permission.account"
-                                    type="checkbox"></td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'class')"
-                                    :checked="data.permission.class"
-                                    type="checkbox"></td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'subject')"
-                                    :checked="data.permission.subject"
-                                    type="checkbox"></td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'class_routine')"
-                                    :checked="data.permission.class_routine"
-                                    type="checkbox"></td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'attendance')"
-                                    :checked="data.permission.attendance"
-                                    type="checkbox"></td>
-                                <td><input
-                                    @change="onChange(data.id,$event.target.checked,'notice')"
-                                    :checked="data.permission.notice"
-                                    type="checkbox"></td>
-
-
+                                   <td>{{data.first_name}}</td>
+                                   <td>{{data.last_name}}</td>
+                                   <td>{{data.email}}</td>
+                                   <td>{{data.department_name}}</td>
+                                   <td>{{data.class_name}}</td>
+                                   <td>{{data.section_name}}</td>
                                 <td>
                                     <div class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                                           aria-expanded="false">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                             <span class="flaticon-more-button-of-three-dots"></span>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
 
                                             <a class="dropdown-item" @click="showUpdate(data)"><i
                                                 class="fas fa-cogs text-dark-pastel-green"></i> Edit</a>
-                                            <button class="dropdown-item" @click="destroy(data.id)"><i
-                                                class="fas fa-times text-orange-red"></i> Delete
-                                            </button>
+                                            <button  class="dropdown-item"  @click="destroy(data.id)"><i class="fas fa-times text-orange-red"></i>Delete</button>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
+
 
 
                             </tbody>
@@ -429,68 +368,55 @@
     </div>
     <!-- Class Table Area End Here -->
 
-    <footer-componant/>
+    <footer-componant />
 </template>
 <script>
 
 import Header from '@/Pages/Admin/Header.vue'
 import Nav from '@/Pages/Admin/Nav.vue'
 import Footer from '@/Pages/Admin/Footer.vue'
-
 export default {
-    props: {
-        'sub_admins': {},
+    props:{
+        'teacherdata':{},
     },
-    data() {
+    data(){
         return {
             showUpdateModal: false,
             updateData : {},
         }
     },
-
     components: {
 
         HeaderComponant: Header,
         NavComponant: Nav,
         FooterComponant: Footer,
-
     },
     methods: {
-        onChange(id, checked, type) {
-            //set data type and value
-            const data = {};
-            data[type] = checked;
-            console.log(id, checked, type)
-            this.$inertia.post(`/all-sub-admin/update_permission/${id}`, {
-                data: data
-            });
 
+        destroy(id){
+            if (confirm('Are you sure you want to delete this?')) {
+                this.$inertia.post('class-teacher-destroy/destroy/' + id)
+            }
         },
+
+        update() {
+            //show update popup
+            this.$inertia.post(`/class-teacher-update/update/${this.updateData.id}`, {
+                data: this.updateData
+            });
+            this.showUpdateModal = false;
+        },
+
         showUpdate(data) {
             //show update popup
             this.updateData = data;
             this.showUpdateModal = true;
 
         },
-        update() {
-            //show update popup
-            this.$inertia.post(`/all-sub-admin/update/${this.updateData.id}`, {
-                data: this.updateData
-            });
-            this.showUpdateModal = false;
-        },
-        destroy(id) {
-            //show delete alert
-            //if user confirm delete
-            if (confirm('Are you sure you want to delete this?')) {
-                this.$inertia.post(`/all-sub-admin/destroy/${id}`);
-            }
-        },
     }
 
 }
 </script>
-
 <style>
 .modal-mask {
     position: fixed;
