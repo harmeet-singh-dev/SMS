@@ -290,12 +290,12 @@
         <div class="dashboard-content-one">
             <!-- Breadcubs Area Start Here -->
             <div class="breadcrumbs-area">
-                <h3>Section</h3>
+                <h3>Class Teacher</h3>
                 <ul>
                     <li>
                         <a href="index.html">Home</a>
                     </li>
-                    <li>All Section</li>
+                    <li>All Class Teacher</li>
                 </ul>
             </div>
             <!-- Breadcubs Area End Here -->
@@ -304,7 +304,7 @@
                 <div class="card-body">
                     <div class="heading-layout1">
                         <div class="item-title">
-                            <h3>All Section</h3>
+                            <h3>All Class Teacher</h3>
                         </div>
 
                     </div>
@@ -314,9 +314,9 @@
                             <thead>
                             <tr >
                                 <th>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input checkAll">
-                                        <label class="form-check-label">S. No.</label>
+                                    <div>
+
+                                        <label>S. No.</label>
                                     </div>
                                 </th>
                                 <th>Teacher First Name</th>
@@ -328,20 +328,21 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(data,index) in teacherdata" :key="index">
-                                <!--tr v-for="Classes in Data" :key="Classes"-->
+                                <tr v-for="(user,index) in teacherdata.data" :key="index">
+
+
                                 <td>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input">
-                                        <label class="form-check-label">{{index+1}}</label>
+                                    <div>
+
+                                        <label>{{index+1}}</label>
                                     </div>
                                 </td>
-                                   <td>{{data.first_name}}</td>
-                                   <td>{{data.last_name}}</td>
-                                   <td>{{data.email}}</td>
-                                   <td>{{data.department_name}}</td>
-                                   <td>{{data.class_name}}</td>
-                                   <td>{{data.section_name}}</td>
+                                   <td>{{user.first_name}}</td>
+                                   <td>{{user.last_name}}</td>
+                                   <td>{{user.email}}</td>
+                                   <td>{{user.department_name}}</td>
+                                   <td>{{user.class_name}}</td>
+                                   <td>{{user.section_name}}</td>
                                 <td>
                                     <div class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -349,9 +350,9 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
 
-                                            <a class="dropdown-item" @click="showUpdate(data)"><i
+                                            <a class="dropdown-item" @click="showUpdate(user)"><i
                                                 class="fas fa-cogs text-dark-pastel-green"></i> Edit</a>
-                                            <button  class="dropdown-item"  @click="destroy(data.id)"><i class="fas fa-times text-orange-red"></i>Delete</button>
+                                            <button  class="dropdown-item"  @click="destroy(user.id)"><i class="fas fa-times text-orange-red"></i>Delete</button>
                                         </div>
                                     </div>
                                 </td>
@@ -361,6 +362,7 @@
 
                             </tbody>
                         </table>
+                        <pagination class="mt-6" :links="teacherdata.links" />
                     </div>
                 </div>
             </div>
@@ -375,6 +377,7 @@
 import Header from '@/Pages/Admin/Header.vue'
 import Nav from '@/Pages/Admin/Nav.vue'
 import Footer from '@/Pages/Admin/Footer.vue'
+import Pagination from '@/Shared/Pagination'
 export default {
     props:{
         'teacherdata':{},
@@ -390,6 +393,7 @@ export default {
         HeaderComponant: Header,
         NavComponant: Nav,
         FooterComponant: Footer,
+        Pagination
     },
     methods: {
 

@@ -14,14 +14,13 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="first_name">Class Name</label>
 
-                                </div>
                                 <div class="form-group">
-                                    <label for="name">Section Name</label>
-                                    <input type="text" class="form-control" id="last_name"
-                                           v-model="form.section_name">
+                                     <label for="first_name">Class Name</label>
+                                               <select class="select2" v-model="form.class_name">
+                                        <option value="">Please Select Class *</option>
+ <option v-for='(classdata,index) in classes' :key="index" :value='classdata.id'>{{ classdata.class_name }} </option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Teacher Name</label>
@@ -369,8 +368,7 @@
                                             <span class="flaticon-more-button-of-three-dots"></span>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
-
-                                            <a class="dropdown-item" @click="showUpdate(user)"><i
+                                   <a class="dropdown-item" @click="showUpdate(user)"><i
                                                 class="fas fa-cogs text-dark-pastel-green"></i> Edit</a>
                                             <button class="dropdown-item" @click="destroy(user.id)"><i
                                                 class="fas fa-times text-orange-red"></i> Delete
@@ -401,7 +399,11 @@ import Pagination from '@/Shared/Pagination'
 
 export default {
     props: {
-        'classroutine': {},
+         'classroutine': {},
+         'classes':{},
+         'section':{},
+         'subject':{},
+         'teacher':{}
     },
     data() {
         return {
@@ -415,7 +417,7 @@ export default {
         HeaderComponant: Header,
         NavComponant: Nav,
         FooterComponant: Footer,
-         Pagination,
+        Pagination,
 
     },
     methods: {

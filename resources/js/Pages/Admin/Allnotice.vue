@@ -314,12 +314,12 @@
         <div class="dashboard-content-one">
             <!-- Breadcubs Area Start Here -->
             <div class="breadcrumbs-area">
-                <h3>Class</h3>
+                <h3>Notice</h3>
                 <ul>
                     <li>
                         <a href="index.html">Home</a>
                     </li>
-                    <li>All Class</li>
+                    <li>All Notice</li>
                 </ul>
             </div>
             <!-- Breadcubs Area End Here -->
@@ -338,9 +338,9 @@
                             <thead>
                             <tr >
                                 <th>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input checkAll">
-                                        <label class="form-check-label">S. No.</label>
+                                    <div>
+
+                                        <label>S. No.</label>
                                     </div>
                                 </th>
                                 <th>Notice Title</th>
@@ -353,21 +353,22 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(data,index) in notice" :key="index">
-                                <!--tr v-for="Classes in Data" :key="Classes"-->
+                                 <tr v-for="(user,index) in notice.data" :key="index">
+
+
                                 <td>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input">
-                                        <label class="form-check-label">{{index+1}}</label>
+                                    <div>
+
+                                        <label>{{index+1}}</label>
                                     </div>
                                 </td>
 
-                                <td>{{data.title}}</td>
-                                <td>{{data.description}}</td>
-                                <td>{{data.posted_by}}</td>
-                                <td>{{data.time}}</td>
-                                <td> <input type="checkbox" :checked="data.teacher"></td>
-                                <td> <input type="checkbox" :checked="data.student"></td>
+                                <td>{{user.title}}</td>
+                                <td>{{user.description}}</td>
+                                <td>{{user.posted_by}}</td>
+                                <td>{{user.time}}</td>
+                                <td> <input type="checkbox" :checked="user.teacher"></td>
+                                <td> <input type="checkbox" :checked="user.student"></td>
                                 <td>
                                     <div class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -375,9 +376,9 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
 
-                                            <a class="dropdown-item" @click="showUpdate(data)"><i
+                                            <a class="dropdown-item" @click="showUpdate(user)"><i
                                                 class="fas fa-cogs text-dark-pastel-green"></i> Edit</a>
-                                            <button  class="dropdown-item"  @click="destroy(data.id)"><i class="fas fa-times text-orange-red"></i>Delete</button>
+                                            <button  class="dropdown-item"  @click="destroy(user.id)"><i class="fas fa-times text-orange-red"></i>Delete</button>
                                         </div>
                                     </div>
                                 </td>
@@ -387,10 +388,11 @@
 
                             </tbody>
                         </table>
-                    </div>
+                         <pagination class="mt-6" :links="notice.links" />
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!-- Class Table Area End Here -->
 
@@ -401,6 +403,7 @@
 import Header from '@/Pages/Admin/Header.vue'
 import Nav from '@/Pages/Admin/Nav.vue'
 import Footer from '@/Pages/Admin/Footer.vue'
+import Pagination from '@/Shared/Pagination'
 export default {
     props:{
         'notice':{},
@@ -416,6 +419,7 @@ export default {
         HeaderComponant: Header,
         NavComponant: Nav,
         FooterComponant: Footer,
+        Pagination
     },
     methods: {
 

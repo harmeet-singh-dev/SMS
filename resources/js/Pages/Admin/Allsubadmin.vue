@@ -325,9 +325,9 @@
                             <thead>
                             <tr>
                                 <th>
-                                    <div class="form-check">
+                                    <div>
 
-                                        <label class="form-check-label">S. No.</label>
+                                        <label>S. No.</label>
                                     </div>
                                 </th>
                                 <th>First Name</th>
@@ -349,9 +349,9 @@
                             <tr v-for="(data,index) in sub_admins" :key="index">
                                 <!--tr v-for="Classes in Data" :key="Classes"-->
                                 <td>
-                                    <div class="form-check">
+                                    <div>
 
-                                        <label class="form-check-label">{{ index + 1 }}</label>
+                                        <label>{{ index + 1 }}</label>
                                     </div>
                                 </td>
 

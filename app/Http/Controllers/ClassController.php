@@ -34,7 +34,7 @@ class ClassController extends Controller
             ->join('sections', 'sections.id', '=', 'class_teachers.section_id')
             ->join('departments', 'departments.id', '=', 'class_teachers.department_id')
             ->select('class_teachers.id','users.first_name','users.last_name','users.email','classes.class_name','sections.section_name','departments.department_name')
-            ->get();
+            ->paginate(2);
              return Inertia::render('Admin/Allclassteacher',compact('teacherdata'));
 
     }
@@ -94,19 +94,25 @@ class ClassController extends Controller
 
   public function allclassroutine()
   {
-      $user = Auth::user();
+        $id = Auth::user()->organisation_id;
+        $classes = Classes::where('organisation_id',$id)->select(['id','class_name'])->get();
+        $section = Section::where('organisation_id',$id)->select(['id','section_name'])->get();
+        $subject = Subject::where('organisation_id',$id)->select(['id','subject_name'])->get();
+        $teacher = User::where('organisation_id',$id)->where('user_type','4')->select(['id','first_name','last_name'])->get();
+
+
       $classroutine = DB::table('class_routines')
             ->join('users', 'users.id', '=', 'class_routines.teacher_name')
             ->join('classes', 'classes.id', '=', 'class_routines.class_name')
             ->join('sections', 'sections.id', '=', 'class_routines.section_name')
             ->join('subjects', 'subjects.id', '=', 'class_routines.subject_name')
-            ->where('class_routines.organisation_id',$user->organisation_id)
+            ->where('class_routines.organisation_id', $id)
             ->select('users.first_name','users.last_name','classes.class_name','sections.section_name','subjects.subject_name',
             'class_routines.start_time','class_routines.end_time','class_routines.date','class_routines.monday',
             'class_routines.tuesday','class_routines.wednesday','class_routines.thursday','class_routines.friday',
             'class_routines.saturday','class_routines.start_break','class_routines.end_break','class_routines.id')
             ->paginate(1);
-     return Inertia::render('Admin/Allclassroutine',compact('classroutine'));
+     return Inertia::render('Admin/Allclassroutine',compact('classroutine','classes','section','subject','teacher'));
       }
 
       public function deleteroutine($id)

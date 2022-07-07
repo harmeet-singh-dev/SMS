@@ -28,6 +28,7 @@ class User extends Authenticatable
         'last_name',
         'school_name',
         'email',
+        'child_id',
         'password',
         'address',
         'city',

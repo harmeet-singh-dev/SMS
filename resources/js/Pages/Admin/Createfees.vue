@@ -103,7 +103,8 @@
                                         Book</a>
                                 </li>
                             </ul>
-                        </li>
+
+                     </li>
                         <li class="nav-item sidebar-nav-item">
                             <a href="#" class="nav-link"><i class="flaticon-technological"></i><span>Acconunt</span></a>
                             <ul class="nav sub-group-menu">
@@ -217,10 +218,6 @@
             <!-- Sidebar Area End Here -->
 
 
-
-
-
-
            <div class="dashboard-content-one">
                 <!-- Breadcubs Area Start Here -->
                 <div class="breadcrumbs-area">
@@ -248,53 +245,46 @@
                             <div class="row">
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Select Class Name *</label>
-                                    <select name="class_name" id="class_name" v-model="form.className">
-                                    <optgroup label="Select Class Name" >
-                                           <option v-for="(classObj,index) in allClasses" :key="index" :value="classObj.id">{{classObj.class_name}}</option>
-                                        </optgroup>
+                                    <select class="form-control" v-model="form.class_name">
+                                    <option value="">Select Class Name</option>
+                                    <option v-for="(class_data,index) in classes" :key="index" :value="class_data.id">{{class_data.class_name}}</option>
                                     </select>
                                 </div>
 
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Select Section Name *</label>
-                                     <select name="section_name" id="section_name" v-model="form.sectionName">
-                                     <optgroup label="Select Section Name">
-                                        <option v-for="(section,index) in allSections" :key="index" :value="section.id">{{section.section_name}}</option>
-                                        </optgroup>
-                                    </select>
+                                 <select class="form-control" v-model="form.section_name">
+                                 <option value="">Select Section Name</option>
+                                 <option v-for="(section_data,index) in section" :key="index" :value="section_data.id">{{section_data.section_name}}</option>
+                                 </select>
                                 </div>
 
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Student Name *</label>
-                                    <select name="student_name" id="student_name" v-model="form.studentName">
-                                      <optgroup label="Select Student Name">
-                                       <option v-for="(student,index) in students" :key="index" :value="student.id">{{student.user.first_name}} {{student.user.last_name}}</option>
-
-                                       </optgroup>
-                                    </select>
+                                 <select class="form-control" v-model="form.student_name">
+                                 <option value="">Select Student Name</option>
+                                 <option v-for="(student_data,index) in users_data" :key="index" :value="student_data.id">{{student_data.first_name}} {{student_data.last_name}}</option>
+                                 </select>
                                 </div>
 
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Father Name *</label>
-                                    <select name="father_name" id="father_name" v-model="form.fatherName">
-                                      <optgroup label="Select Father Name">
-                                       <option value=""></option>
-
-                                       </optgroup>
+                                    <select class="form-control" onchange="getfathername()" v-model="form.father_name">
+                                    <option value=""></option>
                                     </select>
                                 </div>
 
                                  <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Payment Mode *</label>
-                                    <select name="payment_mode" v-model="form.paymentMethod">
-                                      <optgroup label="Select Payment Mode">
+                                    <select class="form-control" v-model="form.paymentMethod">
+                                       <option>Select Payment Mode</option>
                                        <option value="cash">Cash</option>
                                        <option value="bank_deposit">Bank Deposit</option>
                                        <option value="cheque">Cheque</option>
                                        <option value="credit_card">Credit card</option>
                                        <option value="debit_card">Debit card</option>
                                        <option value="other">Other</option>
-                                       </optgroup>
+
                                     </select>
                                 </div>
 
@@ -400,43 +390,27 @@ import { ref } from 'vue';
 
 export default {
 
-    setup() {
-        const date = ref(new Date());
-        // In case of a range picker, you'll receive [Date, Date]
-        const format = (date) => {
-            // const day = date.getDate();
-            const month = date.getMonth() + 1;
-            const year = date.getFullYear();
 
-            return `Selected date is ${day}/${month}/${year}`;
-        }
-
-        return {
-            date,
-            format,
-        }
-    },
      props:{
-         errors: Object,
+        'classes':{},
+        'section':{},
+        'users_data':{},
      },
     components: {
         FooterComponant: Footer,
         HeaderComponant: Header,
         NavComponant: Nav,
-        Datepicker
+
     },
 
-    mounted(){
-        this.fetchClass();
-        this.fetchSections();
-    },
+
     data() {
         return {
             form:{
-                className:'',
-                sectionName:'',
-                studentName:'',
-                fatherName:'',
+                class_name:'',
+                section_name:'',
+                student_name:'',
+                father_name:'',
                 paymentMethod:'',
                 receiptNumber:'',
                 feesSubmitionDate:'',
@@ -453,72 +427,14 @@ export default {
                 penality:'',
                 pendingDue:'',
                 totalFee:'',
-                feeDate:ref(new Date()),
                 note:''
             },
-            allClasses:[],
-            allSections:[],
-            students:[],
-            errors:{},
+
 
         }
     },
-        methods: {
-            fetchClass(){
-                axios.get('get-all-classes')
-                .then(res =>{
-                    this.allClasses = res.data
-                })
-            },
-            fetchSections(){
-                  axios.get('get-all-sections')
-                .then(res =>{
-                    this.allSections = res.data
-                })
-            },
-            submit() {
-              this.errors = {};
-              axios.post('feespost',this.form)
-              .then(res=>{
-                    this.form={};
-                    Toast.fire({
-                        icon:'success',
-                        title:'Fees is deposited !!!'
-                    })
-            }).catch((error) => {
-                this.errors = error.response.data.errors
-            });
-
-           },
-           fetchStudent(){
-            if(this.form.className && this.form.sectionName){
-                     axios.get('fetch-students',{
-                        params:{
-                            classId: this.form.className,
-                            sectionId: this.form.sectionName,
-                        }
-                     })
-                .then(res=>{
-                    this.students = res.data;
-                }).catch((error) => {
-                    this.errors = error.response.data.errors
-                });
-            }
-           }
-        },
-        watch:{
-            'form.className'(newVal){
-                this.fetchStudent();
-            },
-            'form.sectionName'(newVal){
-                this.fetchStudent();
-            },
-            'form.studentName'(newVal){
-                console.log(this.students , "student")
-            }
 
 
-        }
 }
 
 </script>

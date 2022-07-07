@@ -269,6 +269,11 @@
                                     <input type="text" v-model="form.father_name" placeholder="" class="form-control">
                                     <span v-if="errors.father_name" class="text-danger">{{errors.father_name}}</span>
                                 </div>
+                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
+                                    <label>Father Email *</label>
+                                    <input type="email" v-model="form.father_email" placeholder="" class="form-control">
+                                    <span v-if="errors.father_email" class="text-danger">{{errors.father_email}}</span>
+                                </div>
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Mother Name *</label>
                                     <input type="text" v-model="form.mother_name" placeholder="" class="form-control">
@@ -337,7 +342,7 @@
 
                                         <option value="">Please Select Class *</option>
 
-                                       <option v-for='(data,index) in Classesdata' :key="index" :value='data.id'>{{ data.name }}</option>
+                                       <option v-for='(data,index) in Classesdata' :key="index" :value='data.id'>{{ data.class_name }}</option>
 
                                     </select>
                                     <span v-if="errors.classname" class="text-danger">{{errors.classname}}</span>
@@ -435,6 +440,7 @@ export default {
                     first_name:'',
                     last_name:'',
                     father_name:'',
+                    father_email:'',
                     mother_name:'',
                     gender:'',
                     dob:'',

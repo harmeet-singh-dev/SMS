@@ -66,8 +66,8 @@ class AdminnewController extends Controller
     }
 
     public function allsubject()
-    {     $id = Auth::user()->organisation_id;
-        $subject = Subject::where('organisation_id','=',$id)->get(['id','subject_name']);
+    {   $id = Auth::user()->organisation_id;
+        $subject = Subject::where('organisation_id','=',$id)->select(['id','subject_name'])->paginate(5);
         return Inertia::render('Admin/Allsubject',compact('subject'));
     }
 
@@ -94,7 +94,7 @@ class AdminnewController extends Controller
     public function alldepartment()
     {
         $id = Auth::user()->organisation_id;
-        $department = Department::where('organisation_id','=',$id)->get(['id','department_name']);
+        $department = Department::where('organisation_id','=',$id)->select(['id','department_name'])->paginate(2);
         return Inertia::render('Admin/Alldepartment',compact('department'));
 
     }
@@ -122,7 +122,7 @@ class AdminnewController extends Controller
     public function allsection()
     {
         $id = Auth::user()->organisation_id;
-        $section = Section::where('organisation_id','=',$id)->get(['id','section_name']);
+        $section = Section::where('organisation_id','=',$id)->select(['id','section_name'])->paginate(2);
         return Inertia::render('Admin/Allsection',compact('section'));
     }
 
@@ -144,7 +144,7 @@ class AdminnewController extends Controller
     public function allclass()
     {
         $id = Auth::user()->organisation_id;
-        $classes = Classes::where('organisation_id','=',$id)->get(['id','class_name']);
+        $classes = Classes::where('organisation_id','=',$id)->select(['id','class_name'])->paginate(2);
         return Inertia::render('Admin/Allclass',compact('classes'));
     }
 
@@ -166,7 +166,7 @@ class AdminnewController extends Controller
     public function allnotice()
     {
         $id = Auth::user()->organisation_id;
-        $notice = Notice::where('organisation_id','=',$id)->get(['id','title','description','posted_by','time','teacher','student']);
+        $notice = Notice::where('organisation_id','=',$id)->select(['id','title','description','posted_by','time','teacher','student'])->paginate(1);
         return Inertia::render('Admin/Allnotice',compact('notice'));
     }
 

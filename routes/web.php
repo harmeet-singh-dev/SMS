@@ -54,10 +54,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/sectionpost',[AdminController::class, 'sectionpost'])->name('sectionpost');
     Route::get('/notice',[AdminController::class, 'notice'])->name('notice');
     Route::post('/noticepost',[AdminController::class, 'noticepost'])->name('noticepost');
-
     Route::resource('student', StudentController::class);
     Route::resource('teacher', TeacherController::class);
-
     Route::get('/department',[AdminController::class, 'department'])->name('department');
     Route::post('/departmentpost',[AdminController::class, 'departmentpost'])->name('departmentpost');
     Route::get('/class-teacher',[AdminController::class, 'class_teacher'])->name('class_teacher');
@@ -65,9 +63,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/subject',[AdminController::class, 'subject'])->name('subject');
     Route::post('/subjectpost',[AdminController::class, 'subjectpost'])->name('subjectpost');
     Route::get('/fees',[AdminController::class, 'fees'])->name('fees');
-
-
-
     Route::get('/all-sub-admin',[AdminnewController::class, 'allsubadmin'])->name('all-sub-admin');
     Route::post('/all-sub-admin/update/{user}',[AdminnewController::class, 'updateSubAdmin'])->name('all-sub-admin-update');
     Route::post('/all-sub-admin/update_permission/{user}',[AdminnewController::class, 'updateSubAdminPermission'])->name('all-sub-admin-update-permission');
@@ -84,19 +79,15 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/all-class',[AdminnewController::class, 'allclass'])->name('all-class');
     Route::post('/all-class-destroy/destroy/{id}',[AdminnewController::class, 'deleteclass'])->name('all-class-destroy');
     Route::post('/class-update/update/{user}',[AdminnewController::class, 'updateclass'])->name('class-update');
-
     Route::get('/all-notice',[AdminnewController::class, 'allnotice'])->name('all-notice');
     Route::post('/all-notice-destroy/destroy/{id}',[AdminnewController::class, 'deletenotice'])->name('all-notice-destroy');
     Route::post('/notice-update/update/{user}',[AdminnewController::class, 'updatenotice'])->name('class-notice');
-
     Route::post('/feespost',[FeeController::class,'addStudentFee']);
     Route::get('/get-all-classes',[ClassController::class , 'getAllClasses']);
     Route::get('/get-all-sections',[SectionController::class , 'getAllSectons']);
     Route::get('/fetch-students' , [StudentController::class , 'getStudents']);
-
     Route::get('/all-class-teacher',[ClassController::class , 'allclassteacher'])->name('all-class-teacher');
     Route::post('/class-teacher-destroy/destroy/{id}',[ClassController::class, 'deleteclassteacher'])->name('class-teacher-destroy');
-
     Route::get('/class-routine',[ClassController::class , 'createclassroutine'])->name('class-routine');
     Route::post('/routinepost',[ClassController::class, 'routinepost'])->name('routinepost');
     Route::get('/all-class-routine',[ClassController::class , 'allclassroutine'])->name('all-class-routine');

@@ -267,13 +267,18 @@ class AdminController extends Controller
 
     public function fees()
     {
-        return Inertia::render('Admin/Createfees');
+        $id = Auth::user()->organisation_id;
+        $classes = Classes::where('organisation_id',$id)->select(['id','class_name'])->get();
+        $section = Section::where('organisation_id',$id)->select(['id','section_name'])->get();
+        $users_data = User::where('organisation_id',$id)->where('user_type','2')->select(['id','first_name','last_name','email'])->get();
+     // dd($section);
+        return Inertia::render('Admin/Createfees',compact('classes','section','users_data'));
     }
 
     public function classteacherpost(Request $request)
     {
         $id = Auth::user()->organisation_id;
-       ClassTeacher::create([
+        ClassTeacher::create([
                     'organisation_id' => $id,
                     'teacher_id'=>$request->get('teacher_name'),
                     'class_id'=>$request->get('class_name'),

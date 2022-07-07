@@ -47,12 +47,12 @@ class StudentController extends Controller
      * @return \Inertia\Response
      */
     public function create()
-    {   
+    {
         $id = Auth::user()->id;
         $organisation_id = Auth::user()->organisation_id;
         $user_type = Auth::user()->user_type;
         if ($user_type == '1' || $user_type == '5') {
-          
+
                 $users = User::find($id);
                 $Classes = Classes::where('organisation_id', '=', $organisation_id)
                     ->get();
@@ -104,7 +104,7 @@ class StudentController extends Controller
 
                 $users = User::find($id);
                 $classes = Classes::where('organisation_id', '=', $organisation_id)
-                    ->get(['name']);
+                    ->get(['class_name']);
                 $section = Section::where('organisation_id', '=', $organisation_id)
                     ->get(['section_name']);
 
@@ -140,6 +140,15 @@ class StudentController extends Controller
                     'mother_name' => $request->get('mother_name'),
                     'photo' =>$request->file('photo') ? $request->file('photo')->store('students') : '',
 
+                ]);
+
+                 $user = User::create([
+                    'organisation_id' => $organisation_id,
+                    'user_type' => '3',
+                    'first_name' => $request->get('father_name'),
+                    'child_id' => $lastinsertid,
+                    'email' => $request->get('father_email'),
+                    'password' => bcrypt('12345678'),
                 ]);
                 return redirect()->route('student.index')->with('success', 'Student Created Successfully');
 
