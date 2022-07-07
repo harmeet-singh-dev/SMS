@@ -271,8 +271,9 @@ class AdminController extends Controller
         $classes = Classes::where('organisation_id',$id)->select(['id','class_name'])->get();
         $section = Section::where('organisation_id',$id)->select(['id','section_name'])->get();
         $users_data = User::where('organisation_id',$id)->where('user_type','2')->select(['id','first_name','last_name','email'])->get();
+        $father_data = User::where('user_type','3')->select(['child_id','first_name','last_name','email'])->get();
      // dd($section);
-        return Inertia::render('Admin/Createfees',compact('classes','section','users_data'));
+        return Inertia::render('Admin/Createfees',compact('classes','section','users_data', 'father_data'));
     }
 
     public function classteacherpost(Request $request)

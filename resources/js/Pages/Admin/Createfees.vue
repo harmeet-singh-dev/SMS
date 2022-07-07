@@ -261,7 +261,7 @@
 
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Student Name *</label>
-                                 <select class="form-control" v-model="form.student_name">
+                                 <select class="form-control" @change="setfathername($event)" v-model="form.student_name">
                                  <option value="">Select Student Name</option>
                                  <option v-for="(student_data,index) in users_data" :key="index" :value="student_data.id">{{student_data.first_name}} {{student_data.last_name}}</option>
                                  </select>
@@ -269,9 +269,7 @@
 
                                 <div class="col-xl-3 col-lg-6 col-12 form-group">
                                     <label>Father Name *</label>
-                                    <select class="form-control" onchange="getfathername()" v-model="form.father_name">
-                                    <option value=""></option>
-                                    </select>
+                                    <input type="text" name="father_name" v-model="father_name">
                                 </div>
 
                                  <div class="col-xl-3 col-lg-6 col-12 form-group">
@@ -387,6 +385,7 @@ import Header from '@/Pages/Admin/Header.vue'
 import Nav from '@/Pages/Admin/Nav.vue'
 
 import { ref } from 'vue';
+import { forEach } from 'lodash';
 
 export default {
 
@@ -395,6 +394,7 @@ export default {
         'classes':{},
         'section':{},
         'users_data':{},
+        'father_data':{},
      },
     components: {
         FooterComponant: Footer,
@@ -411,6 +411,7 @@ export default {
                 section_name:'',
                 student_name:'',
                 father_name:'',
+                father_set: false,
                 paymentMethod:'',
                 receiptNumber:'',
                 feesSubmitionDate:'',
@@ -433,6 +434,20 @@ export default {
 
         }
     },
+    methods: {
+        setfathername(event) {
+            this.father_set = false;
+            this.father_data.forEach(element => {
+                if (element.child_id.toString() === event.target.value) {
+                    this.father_name = element.first_name;
+                    this.father_set = true;
+                }
+            });
+            if (this.father_set === false) {
+                this.father_name = '';
+            }
+        }
+    }
 
 
 }
