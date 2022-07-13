@@ -71,8 +71,16 @@ class AdminnewController extends Controller
     public function allsubject()
     {
         $id = Auth::user()->organisation_id;
-        $subject = Subject::where('organisation_id', '=', $id)->select(['id', 'subject_name'])->paginate(5);
-        return Inertia::render('Admin/Allsubject', compact('subject'));
+
+        $subject = Subject::where('organisation_id', '=', $id)
+            ->filter(request()->only('search'))
+            ->select(['id', 'subject_name'])
+            ->paginate(10)
+            ->withQueryString();
+        return Inertia::render('Admin/Allsubject', [
+            'subject' => $subject,
+            'filters' => request()->all('search')
+        ]);
     }
 
     public function deleteSubject($id)
