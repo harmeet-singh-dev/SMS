@@ -155,8 +155,16 @@ class AdminnewController extends Controller
     public function allclass()
     {
         $id = Auth::user()->organisation_id;
-        $classes = Classes::where('organisation_id','=',$id)->select(['id','class_name'])->paginate(2);
-        return Inertia::render('Admin/Allclass',compact('classes'));
+         $classes = Classes::where('organisation_id', '=', $id)
+            ->filter(request()->only('search'))
+            ->select(['id','class_name'])
+            ->paginate(10)
+            ->withQueryString();
+
+        return Inertia::render('Admin/Allclass',[
+            'classes' => $classes,
+            'filters' => request()->all('search')
+        ]);
     }
 
     public function deleteclass($id)

@@ -432,7 +432,7 @@ export default {
 
         },
     },
-        watch: {
+    watch: {
         'indexForm.search': {
             handler: throttle(function () {
                 this.$inertia.get('/all-department', pickBy(this.indexForm), {preserveState: true})
