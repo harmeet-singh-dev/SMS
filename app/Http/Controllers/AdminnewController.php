@@ -97,8 +97,16 @@ class AdminnewController extends Controller
     public function alldepartment()
     {
         $id = Auth::user()->organisation_id;
-        $department = Department::where('organisation_id','=',$id)->select(['id','department_name'])->paginate(2);
-        return Inertia::render('Admin/Alldepartment',compact('department'));
+        $department = Department::where('organisation_id', '=', $id)
+            ->filter(request()->only('search'))
+            ->select(['id', 'department_name'])
+            ->paginate(10)
+            ->withQueryString();
+
+        return Inertia::render('Admin/Alldepartment',[
+            'department' => $department,
+            'filters' => request()->all('search')
+        ]);
 
     }
 
