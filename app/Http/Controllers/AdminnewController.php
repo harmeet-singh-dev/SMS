@@ -21,22 +21,25 @@ class AdminnewController extends Controller
     {
         $id = Auth::user()->organisation_id;
         $sub_admins = User::where('organisation_id', '=', $id)
+            ->filter(request()->only('search'))
             ->where('user_type', '=', 5)
             ->with('permission')
-            ->get(['id', 'first_name', 'last_name', 'email']);
-          //  ->paginate(10);
-//dd($sub_admins);
+            ->select(['id', 'first_name', 'last_name', 'email'])
+            ->paginate(10)
+            ->withQueryString();
         //loop through the sub admin and check if permission is set
         foreach ($sub_admins as $sub_admin) {
-            if ($sub_admin->permission === null) {
-                $sub_admin->permission()->create([
-                    'user_id' => $sub_admin->id,
-                    'organisation_id' => $id,
-                ]);
+            $sub_admin->permission_set = false;
+            if ($sub_admin->permission) {
+                $sub_admin->permission_set = true;
             }
         }
 
-        return Inertia::render('Admin/Allsubadmin',compact('sub_admins'));
+
+        return Inertia::render('Admin/Allsubadmin',[
+            'sub_admins' => $sub_admins,
+            'filters' => request()->all('search')
+        ]);
     }
 
     public function updateSubAdmin(Request $request,User $user)
