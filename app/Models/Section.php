@@ -12,4 +12,13 @@ class Section extends Model
          'section_name',
          'organisation_id'
     ];
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('section_name', 'like', '%'.$search.'%');
+            });
+        });
+    }
 }

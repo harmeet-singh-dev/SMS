@@ -321,6 +321,12 @@
                                 </div>
                             </div>
                         </div>
+                         <div class="col-8">
+                            <div class="text-right">
+                                <a href="/department" class="btn btn-primary"><i
+                                    class="fas fa-plus"></i> Add Department</a>
+                            </div>
+                        </div>
 
                     </div>
 

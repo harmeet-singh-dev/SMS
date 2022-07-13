@@ -36,13 +36,13 @@ class AdminnewController extends Controller
         }
 
 
-        return Inertia::render('Admin/Allsubadmin',[
+        return Inertia::render('Admin/Allsubadmin', [
             'sub_admins' => $sub_admins,
             'filters' => request()->all('search')
         ]);
     }
 
-    public function updateSubAdmin(Request $request,User $user)
+    public function updateSubAdmin(Request $request, User $user)
     {
         $data = $request->data;
         $user->update($data);
@@ -51,7 +51,7 @@ class AdminnewController extends Controller
 
     }
 
-    public function updateSubAdminPermission(Request $request,User $user)
+    public function updateSubAdminPermission(Request $request, User $user)
     {
         $data = $request->data;
         $user->permission()->update($data);
@@ -69,14 +69,15 @@ class AdminnewController extends Controller
     }
 
     public function allsubject()
-    {   $id = Auth::user()->organisation_id;
-        $subject = Subject::where('organisation_id','=',$id)->select(['id','subject_name'])->paginate(5);
-        return Inertia::render('Admin/Allsubject',compact('subject'));
+    {
+        $id = Auth::user()->organisation_id;
+        $subject = Subject::where('organisation_id', '=', $id)->select(['id', 'subject_name'])->paginate(5);
+        return Inertia::render('Admin/Allsubject', compact('subject'));
     }
 
     public function deleteSubject($id)
     {
-        Subject::where('id',$id)->delete();
+        Subject::where('id', $id)->delete();
 
         return Redirect::back()->with('success', 'Subject deleted successfully');
     }
@@ -103,7 +104,7 @@ class AdminnewController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return Inertia::render('Admin/Alldepartment',[
+        return Inertia::render('Admin/Alldepartment', [
             'department' => $department,
             'filters' => request()->all('search')
         ]);
@@ -112,7 +113,7 @@ class AdminnewController extends Controller
 
     public function deletedepartment($id)
     {
-        Department::where('id',$id)->delete();
+        Department::where('id', $id)->delete();
 
         return Redirect::back()->with('success', 'Department deleted successfully');
     }
@@ -133,13 +134,21 @@ class AdminnewController extends Controller
     public function allsection()
     {
         $id = Auth::user()->organisation_id;
-        $section = Section::where('organisation_id','=',$id)->select(['id','section_name'])->paginate(2);
-        return Inertia::render('Admin/Allsection',compact('section'));
+
+        $section = Section::where('organisation_id', '=', $id)
+            ->filter(request()->only('search'))
+            ->select(['id', 'section_name'])
+            ->paginate(10)
+            ->withQueryString();
+        return Inertia::render('Admin/Allsection', [
+            'section' => $section,
+            'filters' => request()->all('search')
+        ]);
     }
 
     public function deletesection($id)
     {
-        Section::where('id',$id)->delete();
+        Section::where('id', $id)->delete();
         return Redirect::back()->with('success', 'Section deleted successfully');
     }
 
@@ -155,13 +164,13 @@ class AdminnewController extends Controller
     public function allclass()
     {
         $id = Auth::user()->organisation_id;
-         $classes = Classes::where('organisation_id', '=', $id)
+        $classes = Classes::where('organisation_id', '=', $id)
             ->filter(request()->only('search'))
-            ->select(['id','class_name'])
+            ->select(['id', 'class_name'])
             ->paginate(10)
             ->withQueryString();
 
-        return Inertia::render('Admin/Allclass',[
+        return Inertia::render('Admin/Allclass', [
             'classes' => $classes,
             'filters' => request()->all('search')
         ]);
@@ -169,7 +178,7 @@ class AdminnewController extends Controller
 
     public function deleteclass($id)
     {
-        Classes::where('id',$id)->delete();
+        Classes::where('id', $id)->delete();
         return Redirect::back()->with('success', 'class deleted successfully');
     }
 
@@ -187,11 +196,11 @@ class AdminnewController extends Controller
         $id = Auth::user()->organisation_id;
         $notice = Notice::where('organisation_id', '=', $id)
             ->filter(request()->only('search'))
-            ->select(['id','title','description','posted_by','time','teacher','student'])
+            ->select(['id', 'title', 'description', 'posted_by', 'time', 'teacher', 'student'])
             ->paginate(10)
             ->withQueryString();
 
-        return Inertia::render('Admin/Allnotice',[
+        return Inertia::render('Admin/Allnotice', [
             'notice' => $notice,
             'filters' => request()->all('search')
         ]);
@@ -199,7 +208,7 @@ class AdminnewController extends Controller
 
     public function deletenotice($id)
     {
-        Notice::where('id',$id)->delete();
+        Notice::where('id', $id)->delete();
         return Redirect::back()->with('success', 'Notice deleted successfully');
     }
 
