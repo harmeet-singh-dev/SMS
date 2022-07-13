@@ -1,6 +1,4 @@
 <template>
-    <header-componant/>
-    <nav-componant/>
     <div v-if="showUpdateModal">
         <transition name="modal">
             <div class="modal-mask">
@@ -16,10 +14,12 @@
                             <div class="modal-body">
 
                                 <div class="form-group">
-                                     <label for="first_name">Class Name</label>
-                                               <select class="select2" v-model="form.class_name">
+                                    <label for="first_name">Class Name</label>
+                                    <select class="select2" v-model="form.class_name">
                                         <option value="">Please Select Class *</option>
- <option v-for='(classdata,index) in classes' :key="index" :value='classdata.id'>{{ classdata.class_name }} </option>
+                                        <option v-for='(classdata,index) in classes' :key="index" :value='classdata.id'>
+                                            {{ classdata.class_name }}
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -39,387 +39,123 @@
             </div>
         </transition>
     </div>
-    <!-- Page Area Start Here -->
-    <div class="dashboard-page-one">
-        <!-- Sidebar Area Start Here -->
-        <div class="sidebar-main sidebar-menu-one sidebar-expand-md sidebar-color">
-            <div class="mobile-sidebar-header d-md-none">
-                <div class="header-logo">
-                    <a href="index.html"><img src="/custom_folder/img/logo1.png" alt="logo"></a>
+    <!-- Breadcubs Area Start Here -->
+    <div class="breadcrumbs-area">
+        <h3>Class Routine</h3>
+        <ul>
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li>Class Routine</li>
+        </ul>
+    </div>
+    <!-- Breadcubs Area End Here -->
+    <!-- Class Table Area Start Here -->
+    <div class="card height-auto">
+        <div class="card-body">
+            <div class="heading-layout1">
+                <div class="item-title">
+                    <h3>Class Routine Details</h3>
                 </div>
+
             </div>
 
-            <div class="sidebar-menu-content">
-                <ul class="nav nav-sidebar-menu sidebar-toggle-view">
-                    <li class="nav-item sidebar-nav-item">
-                        <a href="/dashboard" class="nav-link"><i
-                            class="flaticon-dashboard"></i><span>Dashboard</span></a>
+            <div class="table-responsive">
+                <table class="table display data-table text-nowrap">
+                    <thead>
+                    <tr>
+                        <th>
+                            <label>S. No.</label>
+                        </th>
+                        <th>Class Name</th>
+                        <th>Section Name</th>
+                        <th>Teacher Name</th>
+                        <th>Subject Name</th>
+                        <th>Period Time</th>
+                        <th>Break Time</th>
+                        <th>Date</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <th>Saturday</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-                    </li>
-                    <li class="nav-item sidebar-nav-item">
-                        <a href="#" class="nav-link"><i
-                            class="flaticon-multiple-users-silhouette"></i><span>Sub Admin</span></a>
-                        <ul class="nav sub-group-menu">
-                            <li class="nav-item">
-                                <a href="/all-sub-admin" class="nav-link"><i class="fas fa-angle-right"></i>All
-                                    Sub Admin</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="sub-admin" class="nav-link"><i
-                                    class="fas fa-angle-right"></i>Create Sub Admin</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item sidebar-nav-item">
-                        <a href="#" class="nav-link"><i class="flaticon-classmates"></i><span>Students</span></a>
-                        <ul class="nav sub-group-menu">
-                            <li class="nav-item">
-                                <a href="all-student.html" class="nav-link"><i class="fas fa-angle-right"></i>All
-                                    Students</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="student" class="nav-link"><i
-                                    class="fas fa-angle-right"></i>Add New Student</a>
-                            </li>
+                    <tr v-for="(user,index) in classroutine.data" :key="index">
+                        <td>
+                            <label>{{ index + 1 }}</label>
+                        </td>
 
-                        </ul>
-                    </li>
-                    <li class="nav-item sidebar-nav-item">
-                        <a href="#" class="nav-link"><i
-                            class="flaticon-multiple-users-silhouette"></i><span>Teachers</span></a>
-                        <ul class="nav sub-group-menu">
-                            <li class="nav-item">
-                                <a href="all-teacher.html" class="nav-link"><i class="fas fa-angle-right"></i>All
-                                    Teachers</a>
-                            </li>
+                        <td>{{ user.class_name }}</td>
+                        <td>{{ user.section_name }}</td>
+                        <td>{{ user.first_name }} {{ user.last_name }}</td>
+                        <td>{{ user.subject_name }}</td>
+                        <td>{{ user.start_time }} to {{ user.end_time }}</td>
+                        <td>{{ user.start_break }} to {{ user.end_break }}</td>
+                        <td>{{ user.date }}</td>
+                        <td>{{ user.monday }}</td>
+                        <td>{{ user.tuesday }}</td>
+                        <td>{{ user.wednesday }}</td>
+                        <td>{{ user.thursday }}</td>
+                        <td>{{ user.friday }}</td>
+                        <td>{{ user.saturday }}</td>
 
-                            <li class="nav-item">
-                                <a href="teacher" class="nav-link"><i class="fas fa-angle-right"></i>Add
-                                    Teacher</a>
-                            </li>
+                        <td>
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                   aria-expanded="false">
+                                    <span class="flaticon-more-button-of-three-dots"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" @click="showUpdate(user)"><i
+                                        class="fas fa-cogs text-dark-pastel-green"></i> Edit</a>
+                                    <button class="dropdown-item" @click="destroy(user.id)"><i
+                                        class="fas fa-times text-orange-red"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
 
-                        </ul>
-                    </li>
-                    <li class="nav-item sidebar-nav-item">
-                        <a href="#" class="nav-link"><i class="flaticon-couple"></i><span>Parents</span></a>
-                        <ul class="nav sub-group-menu">
-                            <li class="nav-item">
-                                <a href="all-parents.html" class="nav-link"><i class="fas fa-angle-right"></i>All
-                                    Parents</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="add-parents.html" class="nav-link"><i class="fas fa-angle-right"></i>Add
-                                    Parent</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item sidebar-nav-item">
-                        <a href="#" class="nav-link"><i class="flaticon-couple"></i><span>Departments</span></a>
-                        <ul class="nav sub-group-menu">
-                            <li class="nav-item">
-                                <a href="all-parents.html" class="nav-link"><i class="fas fa-angle-right"></i>All
-                                    Departments</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="department" class="nav-link"><i class="fas fa-angle-right"></i>Add
-                                    Department</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item sidebar-nav-item">
-                        <a href="#" class="nav-link"><i class="flaticon-books"></i><span>Library</span></a>
-                        <ul class="nav sub-group-menu">
-                            <li class="nav-item">
-                                <a href="all-book.html" class="nav-link"><i class="fas fa-angle-right"></i>All
-                                    Book</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="add-book.html" class="nav-link"><i class="fas fa-angle-right"></i>Add New
-                                    Book</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item sidebar-nav-item">
-                        <a href="#" class="nav-link"><i class="flaticon-technological"></i><span>Fees</span></a>
-                        <ul class="nav sub-group-menu">
-                            <li class="nav-item">
-                                <a href="all-fees.html" class="nav-link"><i class="fas fa-angle-right"></i>All Fees
-                                    Collection</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="fees" class="nav-link"><i class="fas fa-angle-right"></i>Add
-                                    Fees</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item sidebar-nav-item">
-                        <a href="#" class="nav-link"><i
-                            class="flaticon-maths-class-materials-cross-of-a-pencil-and-a-ruler"></i><span>Class</span></a>
-                        <ul class="nav sub-group-menu">
-                            <li class="nav-item">
-                                <a href="all-class.html" class="nav-link"><i class="fas fa-angle-right"></i>All
-                                    Classes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="class" class="nav-link"><i class="fas fa-angle-right"></i>Add New
-                                    Class</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item sidebar-nav-item">
-                        <a href="#" class="nav-link"><i
-                            class="flaticon-maths-class-materials-cross-of-a-pencil-and-a-ruler"></i><span>Section</span></a>
-                        <ul class="nav sub-group-menu">
-                            <li class="nav-item">
-                                <a href="all-class.html" class="nav-link"><i class="fas fa-angle-right"></i>All
-                                    Section</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="section" class="nav-link"><i class="fas fa-angle-right"></i>Add New
-                                    Section</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item sidebar-nav-item">
-                        <a href="#" class="nav-link"><i
-                            class="flaticon-maths-class-materials-cross-of-a-pencil-and-a-ruler"></i><span>Class Teacher</span></a>
-                        <ul class="nav sub-group-menu">
-                            <li class="nav-item">
-                                <a href="all-class.html" class="nav-link"><i class="fas fa-angle-right"></i>All
-                                    Class Teacher</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="class-teacher" class="nav-link"><i class="fas fa-angle-right"></i>Assign new
-                                    class teacher</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item sidebar-nav-item">
-                        <a href="#" class="nav-link"><i
-                            class="flaticon-maths-class-materials-cross-of-a-pencil-and-a-ruler"></i><span>Subject Name</span></a>
-                        <ul class="nav sub-group-menu">
-                            <li class="nav-item">
-                                <a href="all-class.html" class="nav-link"><i class="fas fa-angle-right"></i>All
-                                    Subject</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="subject" class="nav-link"><i class="fas fa-angle-right"></i>Add new subject</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="class-routine.html" class="nav-link"><i class="flaticon-calendar"></i><span>Class
-                                    Routine</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="student-attendence.html" class="nav-link"><i
-                            class="flaticon-checklist"></i><span>Attendence</span></a>
-                    </li>
-                    <li class="nav-item sidebar-nav-item">
-                        <a href="#" class="nav-link"><i class="flaticon-shopping-list"></i><span>Exam</span></a>
-                        <ul class="nav sub-group-menu">
-                            <li class="nav-item">
-                                <a href="exam-schedule.html" class="nav-link"><i class="fas fa-angle-right"></i>Exam
-                                    Schedule</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="exam-grade.html" class="nav-link"><i class="fas fa-angle-right"></i>Exam
-                                    Grades</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="transport.html" class="nav-link"><i
-                            class="flaticon-bus-side-view"></i><span>Transport</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="hostel.html" class="nav-link"><i class="flaticon-bed"></i><span>Hostel</span></a>
-                    </li>
-
-                    <li class="nav-item sidebar-nav-item">
-                        <a href="#" class="nav-link"><i class="flaticon-script"></i><span>Notice</span></a>
-                        <ul class="nav sub-group-menu">
-                            <li class="nav-item">
-                                <a href="exam-schedule.html" class="nav-link"><i class="fas fa-angle-right"></i>All
-                                    Notices</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="notice" class="nav-link"><i class="fas fa-angle-right"></i>Add Notice</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="messaging.html" class="nav-link"><i
-                            class="flaticon-chat"></i><span>Messeage</span></a>
-                    </li>
-                    <li class="nav-item sidebar-nav-item">
-                        <a href="#" class="nav-link"><i class="flaticon-menu-1"></i><span>UI Elements</span></a>
-                        <ul class="nav sub-group-menu">
-                            <li class="nav-item">
-                                <a href="notification-alart.html" class="nav-link"><i class="fas fa-angle-right"></i>Alart</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="button.html" class="nav-link"><i class="fas fa-angle-right"></i>Button</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="grid.html" class="nav-link"><i class="fas fa-angle-right"></i>Grid</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="modal.html" class="nav-link"><i class="fas fa-angle-right"></i>Modal</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="progress-bar.html" class="nav-link"><i class="fas fa-angle-right"></i>Progress
-                                    Bar</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="ui-tab.html" class="nav-link"><i class="fas fa-angle-right"></i>Tab</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="ui-widget.html" class="nav-link"><i
-                                    class="fas fa-angle-right"></i>Widget</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="map.html" class="nav-link"><i
-                            class="flaticon-planet-earth"></i><span>Map</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="account-settings.html" class="nav-link"><i
-                            class="flaticon-settings"></i><span>Account</span></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!-- Sidebar Area End Here -->
-        <div class="dashboard-content-one">
-            <!-- Breadcubs Area Start Here -->
-            <div class="breadcrumbs-area">
-                <h3>Class Routine</h3>
-                <ul>
-                    <li>
-                        <a href="index.html">Home</a>
-                    </li>
-                    <li>Class Routine</li>
-                </ul>
-            </div>
-            <!-- Breadcubs Area End Here -->
-            <!-- Class Table Area Start Here -->
-            <div class="card height-auto">
-                <div class="card-body">
-                    <div class="heading-layout1">
-                        <div class="item-title">
-                            <h3>Class Routine Details</h3>
-                        </div>
-
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="table display data-table text-nowrap">
-                            <thead>
-                            <tr>
-                                <th>
-                                 <label>S. No.</label>
-                                </th>
-                                <th>Class Name</th>
-                                <th>Section Name</th>
-                                <th>Teacher Name</th>
-                                <th>Subject Name</th>
-                                <th>Period Time</th>
-                                <th>Break Time</th>
-                                <th>Date</th>
-                                <th>Monday</th>
-                                <th>Tuesday</th>
-                                <th>Wednesday</th>
-                                <th>Thursday</th>
-                                <th>Friday</th>
-                                <th>Saturday</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                             <tr v-for="(user,index) in classroutine.data" :key="index">
-                               <td>
-                              <label>{{ index + 1 }}</label>
-                               </td>
-
-                                <td>{{ user.class_name }}</td>
-                                <td>{{ user.section_name }}</td>
-                                <td>{{ user.first_name }} {{ user.last_name }}</td>
-                                <td>{{ user.subject_name }}</td>
-                                <td>{{ user.start_time }} to {{ user.end_time }}</td>
-                                <td>{{ user.start_break }} to {{ user.end_break }}</td>
-                                <td>{{ user.date }}</td>
-                                  <td>{{ user.monday }}</td>
-                                  <td>{{ user.tuesday }}</td>
-                                  <td>{{ user.wednesday }}</td>
-                                  <td>{{ user.thursday }}</td>
-                                  <td>{{ user.friday }}</td>
-                                  <td>{{ user.saturday }}</td>
-
-                                <td>
-                                    <div class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                                           aria-expanded="false">
-                                            <span class="flaticon-more-button-of-three-dots"></span>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                   <a class="dropdown-item" @click="showUpdate(user)"><i
-                                                class="fas fa-cogs text-dark-pastel-green"></i> Edit</a>
-                                            <button class="dropdown-item" @click="destroy(user.id)"><i
-                                                class="fas fa-times text-orange-red"></i> Delete
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            </tbody>
-                        </table>
-                        <pagination class="mt-6" :links="classroutine.links" />  </div>
-                </div>
+                    </tbody>
+                </table>
+                <pagination class="mt-6" :links="classroutine.links"/>
             </div>
         </div>
     </div>
-    <!-- Class Table Area End Here -->
-
-    <footer-componant/>
 </template>
 <script>
 
-import Header from '@/Pages/Admin/Header.vue'
-import Nav from '@/Pages/Admin/Nav.vue'
-import Footer from '@/Pages/Admin/Footer.vue'
+import Header from '@/Shared/Header.vue'
+import Nav from '@/Shared/Nav.vue'
+import Footer from '@/Shared/Footer.vue'
 import Pagination from '@/Shared/Pagination'
+import Layout from "@/Shared/Layout";
 
 
 export default {
     props: {
-         'classroutine': {},
-         'classes':{},
-         'section':{},
-         'subject':{},
-         'teacher':{}
+        'classroutine': {},
+        'classes': {},
+        'section': {},
+        'subject': {},
+        'teacher': {}
     },
     data() {
         return {
             showUpdateModal: false,
-            updateData : {},
+            updateData: {},
         }
     },
 
     components: {
-
-        HeaderComponant: Header,
-        NavComponant: Nav,
-        FooterComponant: Footer,
         Pagination,
 
     },
+    layout: Layout,
     methods: {
         onChange(id, checked, type) {
             //set data type and value
@@ -432,7 +168,7 @@ export default {
 
         },
         showUpdate(data) {
-             //append method put to data
+            //append method put to data
             data._method = 'put';
             //show update popup
             this.form = this.$inertia.form(data);
