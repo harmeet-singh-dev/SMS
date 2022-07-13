@@ -185,8 +185,16 @@ class AdminnewController extends Controller
     public function allnotice()
     {
         $id = Auth::user()->organisation_id;
-        $notice = Notice::where('organisation_id','=',$id)->select(['id','title','description','posted_by','time','teacher','student'])->paginate(1);
-        return Inertia::render('Admin/Allnotice',compact('notice'));
+        $notice = Notice::where('organisation_id', '=', $id)
+            ->filter(request()->only('search'))
+            ->select(['id','title','description','posted_by','time','teacher','student'])
+            ->paginate(10)
+            ->withQueryString();
+
+        return Inertia::render('Admin/Allnotice',[
+            'notice' => $notice,
+            'filters' => request()->all('search')
+        ]);
     }
 
     public function deletenotice($id)
