@@ -2,7 +2,7 @@
     <div class="sidebar-main sidebar-menu-one sidebar-expand-md sidebar-color">
         <div class="mobile-sidebar-header d-md-none">
             <div class="header-logo">
-                <a href="index.html"><img src="/custom_folder/img/logo1.png" alt="logo"></a>
+                <a href="/dashboard"><img src="/custom_folder/img/logo1.png" alt="logo"></a>
             </div>
         </div>
         <div class="sidebar-menu-content">
@@ -11,7 +11,7 @@
                     <a href="#" class="nav-link"><i class="flaticon-dashboard"></i><span>Dashboard</span></a>
                     <ul class="nav sub-group-menu">
                         <li class="nav-item">
-                            <a href="index.html" class="nav-link"><i class="fas fa-angle-right"></i>Admin</a>
+                            <a href="/dashboard" class="nav-link"><i class="fas fa-angle-right"></i>Admin</a>
                         </li>
                         <li class="nav-item">
                             <a href="index3.html" class="nav-link"><i
@@ -121,21 +121,21 @@
                         class="flaticon-maths-class-materials-cross-of-a-pencil-and-a-ruler"></i><span>Class</span></a>
                     <ul class="nav sub-group-menu">
                         <li class="nav-item">
-                            <a href="all-class.html" class="nav-link"><i class="fas fa-angle-right"></i>All
+                            <a href="/all-class" class="nav-link"><i class="fas fa-angle-right"></i>All
                                 Classes</a>
                         </li>
                         <li class="nav-item">
-                            <a href="add-class.html" class="nav-link"><i class="fas fa-angle-right"></i>Add New
+                            <a href="/class" class="nav-link"><i class="fas fa-angle-right"></i>Add New
                                 Class</a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="all-subject.html" class="nav-link"><i
+                    <a href="/all-subject" class="nav-link"><i
                         class="flaticon-open-book"></i><span>Subject</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="class-routine.html" class="nav-link"><i class="flaticon-calendar"></i><span>Class
+                    <a href="/all-class-routine" class="nav-link"><i class="flaticon-calendar"></i><span>Class
                                     Routine</span></a>
                 </li>
                 <li class="nav-item">
@@ -163,7 +163,7 @@
                     <a href="hostel.html" class="nav-link"><i class="flaticon-bed"></i><span>Hostel</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="notice-board.html" class="nav-link"><i
+                    <a href="/all-notice" class="nav-link"><i
                         class="flaticon-script"></i><span>Notice</span></a>
                 </li>
                 <li class="nav-item">
