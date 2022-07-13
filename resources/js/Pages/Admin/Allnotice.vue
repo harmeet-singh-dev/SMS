@@ -1,6 +1,6 @@
 <template>
-    <header-componant />
-    <nav-componant />
+    <header-componant/>
+    <nav-componant/>
     <div v-if="showUpdateModal">
         <transition name="modal">
             <div class="modal-mask">
@@ -17,22 +17,22 @@
                                 <div class="form-group">
                                     <label for="first_name">Notice Title</label>
                                     <input type="text" class="form-control" id="subject_name"
-                                           v-model="updateData.title" >
+                                           v-model="updateData.title">
                                 </div>
                                 <div class="form-group">
                                     <label for="first_name">Notice Description</label>
                                     <input type="text" class="form-control" id="subject_name"
-                                           v-model="updateData.description" >
+                                           v-model="updateData.description">
                                 </div>
                                 <div class="form-group">
                                     <label for="first_name">Notice Posted By</label>
                                     <input type="text" class="form-control" id="subject_name"
-                                           v-model="updateData.posted_by" >
+                                           v-model="updateData.posted_by">
                                 </div>
                                 <div class="form-group">
                                     <label for="first_name">Notice Time</label>
                                     <input type="text" class="form-control" id="subject_name"
-                                           v-model="updateData.time" >
+                                           v-model="updateData.time">
                                 </div>
 
                                 <div class="form-group">
@@ -70,7 +70,8 @@
             <div class="sidebar-menu-content">
                 <ul class="nav nav-sidebar-menu sidebar-toggle-view">
                     <li class="nav-item sidebar-nav-item">
-                        <a href="/dashboard" class="nav-link"><i class="flaticon-dashboard"></i><span>Dashboard</span></a>
+                        <a href="/dashboard" class="nav-link"><i
+                            class="flaticon-dashboard"></i><span>Dashboard</span></a>
 
                     </li>
                     <li class="nav-item sidebar-nav-item">
@@ -209,7 +210,8 @@
                                     Class Teacher</a>
                             </li>
                             <li class="nav-item">
-                                <a href="class-teacher" class="nav-link"><i class="fas fa-angle-right"></i>Assign new class teacher</a>
+                                <a href="class-teacher" class="nav-link"><i class="fas fa-angle-right"></i>Assign new
+                                    class teacher</a>
                             </li>
                         </ul>
                     </li>
@@ -260,7 +262,8 @@
                         <a href="#" class="nav-link"><i class="flaticon-script"></i><span>Notice</span></a>
                         <ul class="nav sub-group-menu">
                             <li class="nav-item">
-                                <a href="exam-schedule.html" class="nav-link"><i class="fas fa-angle-right"></i>All Notices</a>
+                                <a href="exam-schedule.html" class="nav-link"><i class="fas fa-angle-right"></i>All
+                                    Notices</a>
                             </li>
                             <li class="nav-item">
                                 <a href="notice" class="nav-link"><i class="fas fa-angle-right"></i>Add Notice</a>
@@ -287,7 +290,8 @@
                                 <a href="modal.html" class="nav-link"><i class="fas fa-angle-right"></i>Modal</a>
                             </li>
                             <li class="nav-item">
-                                <a href="progress-bar.html" class="nav-link"><i class="fas fa-angle-right"></i>Progress Bar</a>
+                                <a href="progress-bar.html" class="nav-link"><i class="fas fa-angle-right"></i>Progress
+                                    Bar</a>
                             </li>
                             <li class="nav-item">
                                 <a href="ui-tab.html" class="nav-link"><i class="fas fa-angle-right"></i>Tab</a>
@@ -328,15 +332,28 @@
                 <div class="card-body">
                     <div class="heading-layout1">
                         <div class="item-title">
-                            <h3>All Class</h3>
+                            <h3>All Notice</h3>
                         </div>
 
                     </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" v-model="indexForm.search"
+                                       placeholder="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
 
+                    </div>
                     <div class="table-responsive">
                         <table class="table display data-table text-nowrap">
                             <thead>
-                            <tr >
+                            <tr>
                                 <th>
                                     <div>
 
@@ -353,50 +370,52 @@
                             </tr>
                             </thead>
                             <tbody>
-                                 <tr v-for="(user,index) in notice.data" :key="index">
+                            <tr v-for="(user,index) in notice.data" :key="index">
 
 
                                 <td>
                                     <div>
 
-                                        <label>{{index+1}}</label>
+                                        <label>{{ index + 1 }}</label>
                                     </div>
                                 </td>
 
-                                <td>{{user.title}}</td>
-                                <td>{{user.description}}</td>
-                                <td>{{user.posted_by}}</td>
-                                <td>{{user.time}}</td>
-                                <td> <input type="checkbox" :checked="user.teacher"></td>
-                                <td> <input type="checkbox" :checked="user.student"></td>
+                                <td>{{ user.title }}</td>
+                                <td>{{ user.description }}</td>
+                                <td>{{ user.posted_by }}</td>
+                                <td>{{ user.time }}</td>
+                                <td><input type="checkbox" :checked="user.teacher"></td>
+                                <td><input type="checkbox" :checked="user.student"></td>
                                 <td>
                                     <div class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           aria-expanded="false">
                                             <span class="flaticon-more-button-of-three-dots"></span>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
 
                                             <a class="dropdown-item" @click="showUpdate(user)"><i
                                                 class="fas fa-cogs text-dark-pastel-green"></i> Edit</a>
-                                            <button  class="dropdown-item"  @click="destroy(user.id)"><i class="fas fa-times text-orange-red"></i>Delete</button>
+                                            <button class="dropdown-item" @click="destroy(user.id)"><i
+                                                class="fas fa-times text-orange-red"></i>Delete
+                                            </button>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
 
 
-
                             </tbody>
                         </table>
-                         <pagination class="mt-6" :links="notice.links" />
+                        <pagination class="mt-6" :links="notice.links"/>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
     <!-- Class Table Area End Here -->
 
-    <footer-componant />
+    <footer-componant/>
 </template>
 <script>
 
@@ -404,14 +423,21 @@ import Header from '@/Pages/Admin/Header.vue'
 import Nav from '@/Pages/Admin/Nav.vue'
 import Footer from '@/Pages/Admin/Footer.vue'
 import Pagination from '@/Shared/Pagination'
+import throttle from "lodash/throttle";
+import pickBy from "lodash/pickBy";
+
 export default {
-    props:{
-        'notice':{},
+    props: {
+        'notice': {},
+        filters: Object,
     },
-    data(){
+    data() {
         return {
             showUpdateModal: false,
-            updateData : {},
+            indexForm: {
+                search: this.filters.search,
+            },
+            updateData: {},
         }
     },
     components: {
@@ -423,7 +449,7 @@ export default {
     },
     methods: {
 
-        destroy(id){
+        destroy(id) {
             if (confirm('Are you sure you want to delete this?')) {
                 this.$inertia.post('all-notice-destroy/destroy/' + id)
             }
@@ -443,7 +469,14 @@ export default {
             this.showUpdateModal = true;
 
         },
-    }
+    },
+    watch: {
+        'indexForm.search': {
+            handler: throttle(function () {
+                this.$inertia.get('/all-notice', pickBy(this.indexForm), {preserveState: true})
+            }, 150),
+        },
+    },
 
 }
 </script>
@@ -463,5 +496,11 @@ export default {
 .modal-wrapper {
     display: table-cell;
     vertical-align: middle;
+}
+
+.row {
+    background: white;
+    border-radius: 1px;
+    box-shadow: none;
 }
 </style>

@@ -320,6 +320,21 @@
 
                     </div>
 
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" v-model="indexForm.search"
+                                        placeholder="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                     <div class="table-responsive">
                         <table class="table display data-table text-nowrap">
                             <thead>
@@ -346,7 +361,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(data,index) in sub_admins" :key="index">
+                            <tr v-for="(data,index) in sub_admins.data" :key="index">
                                 <!--tr v-for="Classes in Data" :key="Classes"-->
                                 <td>
                                     <div>
@@ -423,6 +438,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <pagination class="mt-6" :links="sub_admins.links" />
                 </div>
             </div>
         </div>
@@ -436,14 +452,21 @@
 import Header from '@/Pages/Admin/Header.vue'
 import Nav from '@/Pages/Admin/Nav.vue'
 import Footer from '@/Pages/Admin/Footer.vue'
+import throttle from "lodash/throttle";
+import pickBy from "lodash/pickBy";
+import Pagination from '@/Shared/Pagination'
 
 export default {
     props: {
         'sub_admins': {},
+        filters: Object,
     },
     data() {
         return {
             showUpdateModal: false,
+            indexForm: {
+                search: this.filters.search,
+            },
             updateData : {},
         }
     },
@@ -453,6 +476,7 @@ export default {
         HeaderComponant: Header,
         NavComponant: Nav,
         FooterComponant: Footer,
+        Pagination,
 
     },
     methods: {
@@ -486,7 +510,14 @@ export default {
                 this.$inertia.post(`/all-sub-admin/destroy/${id}`);
             }
         },
-    }
+    },
+    watch: {
+        'indexForm.search': {
+            handler: throttle(function () {
+                this.$inertia.get('/all-sub-admin', pickBy(this.indexForm), {preserveState: true})
+            }, 150),
+        },
+    },
 
 }
 </script>
@@ -507,5 +538,11 @@ export default {
 .modal-wrapper {
     display: table-cell;
     vertical-align: middle;
+}
+
+.row {
+    background: white;
+    border-radius: 1px;
+    box-shadow: none;
 }
 </style>

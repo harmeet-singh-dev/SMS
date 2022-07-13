@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Notice extends Model
 {
     use HasFactory;
-     protected $fillable = [
+
+    protected $fillable = [
         'id',
         'organisation_id',
         'title',
@@ -17,7 +18,17 @@ class Notice extends Model
         'time',
         'teacher',
         'student',
-    
-    
+
+
     ];
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('title', 'like', '%'.$search.'%')
+                    ->where('description', 'like', '%'.$search.'%');
+            });
+        });
+    }
 }

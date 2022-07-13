@@ -309,6 +309,27 @@
 
                     </div>
 
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" v-model="indexForm.search"
+                                       placeholder="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-8">
+                            <div class="text-right">
+                                <a href="/department" class="btn btn-primary"><i
+                                    class="fas fa-plus"></i> Add Department</a>
+                            </div>
+                        </div>
+
+                    </div>
+
                     <div class="table-responsive">
                         <table class="table display data-table text-nowrap">
                             <thead>
@@ -371,13 +392,19 @@ import Header from '@/Pages/Admin/Header.vue'
 import Nav from '@/Pages/Admin/Nav.vue'
 import Footer from '@/Pages/Admin/Footer.vue'
 import Pagination from '@/Shared/Pagination'
+import throttle from "lodash/throttle";
+import pickBy from "lodash/pickBy";
 export default {
     props:{
         'department':{},
+        filters: Object,
     },
     data(){
         return {
             showUpdateModal: false,
+            indexForm: {
+                search: this.filters.search,
+            },
             updateData : {},
         }
     },
@@ -410,7 +437,14 @@ export default {
             this.showUpdateModal = true;
 
         },
-    }
+    },
+    watch: {
+        'indexForm.search': {
+            handler: throttle(function () {
+                this.$inertia.get('/all-department', pickBy(this.indexForm), {preserveState: true})
+            }, 150),
+        },
+    },
 
 }
 </script>
@@ -430,5 +464,11 @@ export default {
 .modal-wrapper {
     display: table-cell;
     vertical-align: middle;
+}
+
+.row {
+    background: white;
+    border-radius: 1px;
+    box-shadow: none;
 }
 </style>
