@@ -320,4 +320,10 @@ export default {
 
 </script>
 
-
+<style>
+.row {
+    background: white;
+    border-radius: 1px;
+    box-shadow: none;
+}
+</style>
