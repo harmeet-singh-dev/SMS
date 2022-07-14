@@ -176,8 +176,8 @@
                 </div>
                 <div class="col-8">
                     <div class="text-right">
-                        <a href="/student/create" class="btn btn-primary"><i
-                            class="fas fa-plus"></i> Add Student</a>
+                        <a href="/teacher/create" class="btn btn-primary"><i
+                            class="fas fa-plus"></i> Add Teacher</a>
                     </div>
                 </div>
             </div>

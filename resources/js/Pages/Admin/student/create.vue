@@ -242,10 +242,6 @@ export default {
         submit() {
             this.errors = {};
             this.form.post('/student', {
-                onSuccess: () => Toast.fire({
-                    icon: 'success',
-                    title: 'New Student is added !!!'
-                }),
                 onError: (errors) => this.errors = errors,
                 preserveScroll: true
             });

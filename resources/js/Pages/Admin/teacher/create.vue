@@ -175,6 +175,7 @@
 
 
 import Layout from '@/Shared/Layout'
+import Swal from "sweetalert2";
 
 
 export default {
@@ -216,10 +217,6 @@ export default {
         submit() {
             this.errors = {};
             this.form.post('/teacher', {
-                onSuccess: () => Toast.fire({
-                    icon: 'success',
-                    title: 'New Teacher is added !!!'
-                }),
                 onError: (errors) => this.errors = errors,
                 preserveScroll: true
             });

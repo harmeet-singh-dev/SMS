@@ -1,5 +1,4 @@
 <template>
-    \
     <!-- Breadcubs Area Start Here -->
     <div class="breadcrumbs-area">
 
