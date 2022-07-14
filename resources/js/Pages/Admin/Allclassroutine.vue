@@ -59,7 +59,39 @@
                 </div>
 
             </div>
+            <div class="row">
 
+                    <div class="input-group col">
+                        <label for="Class">Select class</label>
+                        <select class="select2" v-model="indexForm.class">
+                            <option value="">--None--</option>
+                            <option v-for='(classdata,index) in classes' :key="index" :value='classdata.id'>
+                                {{ classdata.class_name }}
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <div class="input-group col">
+                        <label for="Class">Select Section</label>
+                        <select class="select2" v-model="indexForm.section">
+                            <option value="">--None--</option>
+                            <option v-for='(section,index) in section' :key="index" :value='section.id'>
+                                {{ section.section_name }}
+                            </option>
+                        </select>
+                    </div>
+
+                 <div class="input-group col">
+                        <label for="Class">Select Teacher</label>
+                        <select class="select2" v-model="indexForm.teacher">
+                            <option value="">--None--</option>
+                            <option v-for='(teacherdata,index) in teacher' :key="index" :value='teacherdata.id'>
+                                {{ teacherdata.first_name }} {{ teacherdata.last_name }}
+                            </option>
+                        </select>
+                    </div>
+            </div>
             <div class="table-responsive">
                 <table class="table display data-table text-nowrap">
                     <thead>
@@ -129,11 +161,10 @@
 </template>
 <script>
 
-import Header from '@/Shared/Header.vue'
-import Nav from '@/Shared/Nav.vue'
-import Footer from '@/Shared/Footer.vue'
 import Pagination from '@/Shared/Pagination'
 import Layout from "@/Shared/Layout";
+import throttle from "lodash/throttle";
+import pickBy from "lodash/pickBy";
 
 
 export default {
@@ -142,11 +173,17 @@ export default {
         'classes': {},
         'section': {},
         'subject': {},
-        'teacher': {}
+        'teacher': {},
+        filters: Object,
     },
     data() {
         return {
             showUpdateModal: false,
+            indexForm: {
+                class: this.filters.class,
+                section: this.filters.section,
+                teacher: this.filters.teacher,
+            },
             updateData: {},
         }
     },
@@ -189,7 +226,16 @@ export default {
                 this.$inertia.post(`/class-routine-destroy/destroy/${id}`);
             }
         },
-    }
+    },
+    watch: {
+        'indexForm': {
+            handler: throttle(function () {
+                this.$inertia.get('/all-class-routine', pickBy(this.indexForm), { preserveState: true })
+            }, 150),
+            deep: true,
+        },
+    },
+
 
 }
 </script>
@@ -210,5 +256,10 @@ export default {
 .modal-wrapper {
     display: table-cell;
     vertical-align: middle;
+}
+.row {
+    background: white;
+    border-radius: 1px;
+    box-shadow: none;
 }
 </style>
