@@ -62,7 +62,10 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/classteacherpost',[AdminController::class, 'classteacherpost'])->name('classteacherpost');
     Route::get('/subject',[AdminController::class, 'subject'])->name('subject');
     Route::post('/subjectpost',[AdminController::class, 'subjectpost'])->name('subjectpost');
-    Route::get('/fees',[AdminController::class, 'fees'])->name('fees');
+
+    Route::resource('fees', FeeController::class);
+
+    Route::get('/all-fee',[AdminController::class, 'fees'])->name('fees');
     Route::get('/all-sub-admin',[AdminnewController::class, 'allsubadmin'])->name('all-sub-admin');
     Route::post('/all-sub-admin/update/{user}',[AdminnewController::class, 'updateSubAdmin'])->name('all-sub-admin-update');
     Route::post('/all-sub-admin/update_permission/{user}',[AdminnewController::class, 'updateSubAdminPermission'])->name('all-sub-admin-update-permission');
@@ -82,7 +85,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/all-notice',[AdminnewController::class, 'allnotice'])->name('all-notice');
     Route::post('/all-notice-destroy/destroy/{id}',[AdminnewController::class, 'deletenotice'])->name('all-notice-destroy');
     Route::post('/notice-update/update/{user}',[AdminnewController::class, 'updatenotice'])->name('class-notice');
-    Route::post('/feespost',[FeeController::class,'addStudentFee']);
     Route::get('/get-all-classes',[ClassController::class , 'getAllClasses']);
     Route::get('/get-all-sections',[SectionController::class , 'getAllSectons']);
     Route::get('/fetch-students' , [StudentController::class , 'getStudents']);

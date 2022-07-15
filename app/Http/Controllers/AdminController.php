@@ -265,7 +265,7 @@ class AdminController extends Controller
 
     }
 
-    public function fees()
+    public function allfees()
     {
         $id = Auth::user()->organisation_id;
         $classes = Classes::where('organisation_id',$id)->select(['id','class_name'])->get();
@@ -275,6 +275,7 @@ class AdminController extends Controller
      // dd($section);
         return Inertia::render('Admin/Createfees',compact('classes','section','users_data', 'father_data'));
     }
+
 
     public function classteacherpost(Request $request)
     {

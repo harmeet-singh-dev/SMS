@@ -28,14 +28,45 @@ class ClassController extends Controller
     public function allclassteacher()
     {
          $id = Auth::user()->organisation_id;
+
+        $teacher = User::where('organisation_id', $id)
+            ->where('user_type', '4')
+            ->select('id', 'first_name', 'last_name')
+            ->get();
+        $class = Classes::where('organisation_id', $id)
+            ->select('id', 'class_name')
+            ->get();
+        $section = Section::where('organisation_id', $id)
+            ->select('id', 'section_name')
+            ->get();
+        $department = Department::where('organisation_id', $id)
+            ->select('id', 'department_name')
+            ->get();
+
          $teacherdata = DB::table('class_teachers')
             ->join('users', 'users.id', '=', 'class_teachers.teacher_id')
             ->join('classes', 'classes.id', '=', 'class_teachers.class_id')
             ->join('sections', 'sections.id', '=', 'class_teachers.section_id')
             ->join('departments', 'departments.id', '=', 'class_teachers.department_id')
             ->select('class_teachers.id','users.first_name','users.last_name','users.email','classes.class_name','sections.section_name','departments.department_name')
-            ->paginate(2);
-             return Inertia::render('Admin/Allclassteacher',compact('teacherdata'));
+             ->when(request()->only('search'), function ($query) {
+                 return $query->where('users.first_name', 'like', '%'.request('search').'%')
+                     ->orWhere('users.last_name', 'like', '%'.request('search').'%')
+                     ->orWhere('users.email', 'like', '%'.request('search').'%')
+                     ->orWhere('classes.class_name', 'like', '%'.request('search').'%')
+                     ->orWhere('sections.section_name', 'like', '%'.request('search').'%')
+                     ->orWhere('departments.department_name', 'like', '%'.request('search').'%');
+             })
+             ->paginate(10)
+             ->withQueryString();
+        return Inertia::render('Admin/Allclassteacher', [
+            'classdata' => $class,
+            'sectiondata' => $section,
+            'teachers' => $teacher,
+            'departmentdata' => $department,
+            'teacherdata' => $teacherdata,
+            'filters' => request()->all('search')
+        ]);
 
     }
 
@@ -92,28 +123,50 @@ class ClassController extends Controller
   }
   }
 
-  public function allclassroutine()
-  {
+    public function allclassroutine()
+    {
         $id = Auth::user()->organisation_id;
-        $classes = Classes::where('organisation_id',$id)->select(['id','class_name'])->get();
-        $section = Section::where('organisation_id',$id)->select(['id','section_name'])->get();
-        $subject = Subject::where('organisation_id',$id)->select(['id','subject_name'])->get();
-        $teacher = User::where('organisation_id',$id)->where('user_type','4')->select(['id','first_name','last_name'])->get();
+        $classes = Classes::where('organisation_id', $id)->select(['id', 'class_name'])->get();
+        $section = Section::where('organisation_id', $id)->select(['id', 'section_name'])->get();
+        $subject = Subject::where('organisation_id', $id)->select(['id', 'subject_name'])->get();
+        $teacher = User::where('organisation_id', $id)->where('user_type', '4')->select([
+            'id', 'first_name', 'last_name'
+        ])->get();
 
 
-      $classroutine = DB::table('class_routines')
+        $classroutine = DB::table('class_routines')
+            ->when(request()->only('class'), function ($query) {
+                return $query->where('class_routines.class_name', request('class'));
+            })
+            ->when(request()->only('section'), function ($query) {
+                return $query->where('class_routines.section_name', request('section'));
+            })
+            ->when(request()->only('teacher'), function ($query) {
+                return $query->where('class_routines.teacher_name', request('teacher'));
+            })
             ->join('users', 'users.id', '=', 'class_routines.teacher_name')
             ->join('classes', 'classes.id', '=', 'class_routines.class_name')
             ->join('sections', 'sections.id', '=', 'class_routines.section_name')
             ->join('subjects', 'subjects.id', '=', 'class_routines.subject_name')
             ->where('class_routines.organisation_id', $id)
-            ->select('users.first_name','users.last_name','classes.class_name','sections.section_name','subjects.subject_name',
-            'class_routines.start_time','class_routines.end_time','class_routines.date','class_routines.monday',
-            'class_routines.tuesday','class_routines.wednesday','class_routines.thursday','class_routines.friday',
-            'class_routines.saturday','class_routines.start_break','class_routines.end_break','class_routines.id')
-            ->paginate(1);
-     return Inertia::render('Admin/Allclassroutine',compact('classroutine','classes','section','subject','teacher'));
-      }
+            ->select('users.first_name', 'users.last_name', 'classes.class_name', 'sections.section_name',
+                'subjects.subject_name',
+                'class_routines.start_time', 'class_routines.end_time', 'class_routines.date', 'class_routines.monday',
+                'class_routines.tuesday', 'class_routines.wednesday', 'class_routines.thursday',
+                'class_routines.friday',
+                'class_routines.saturday', 'class_routines.start_break', 'class_routines.end_break',
+                'class_routines.id')
+            ->paginate(10)
+            ->withQueryString();
+      return Inertia::render('Admin/Allclassroutine', [
+          'classroutine' => $classroutine,
+          'classes' => $classes,
+          'section' => $section,
+          'subject' => $subject,
+          'teacher' => $teacher,
+          'filters' =>  request()->all(['class', 'section', 'teacher']),
+      ]);
+  }
 
       public function deleteroutine($id)
       {

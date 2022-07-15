@@ -67,7 +67,7 @@ class TeacherController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return JsonResponse|\Inertia\Response
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
@@ -87,6 +87,7 @@ class TeacherController extends Controller
             'state' => 'required',
             'country' => 'required',
             'pincode' => 'required',
+            'department_id' => 'required',
             'description' => 'string|nullable',
             'photo' => ['nullable', 'image'],
         ]);
@@ -128,9 +129,7 @@ class TeacherController extends Controller
                     'description' => $request->get('description'),
                     'photo' => $request->file('photo') ? $request->file('photo')->store('teachers') : '',
                 ]);
-                return response()->json([
-                    'success' => 'Done'
-                ]);
+                return redirect()->route('teacher.index')->with('success', 'Teacher Created Successfully');
 
             } else {
 
@@ -167,9 +166,7 @@ class TeacherController extends Controller
                     'photo' => $request->file('photo') ? $request->file('photo')->store('teachers') : '',
 
                 ]);
-                return response()->json([
-                    'success' => 'Done'
-                ]);
+                return redirect()->route('teacher.index')->with('success', 'Teacher Created Successfully');
             }
         } else {
             return Inertia::render('/');
@@ -219,6 +216,7 @@ class TeacherController extends Controller
             'city' => 'required',
             'state' => 'required',
             'country' => 'required',
+            'department_id' => 'required',
             'pincode' => 'required',
             'description' => 'string|nullable',
 
