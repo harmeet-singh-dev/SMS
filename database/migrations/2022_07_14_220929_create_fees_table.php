@@ -15,6 +15,7 @@ class CreateFeesTable extends Migration
     {
         Schema::create('fees', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('organisation_id');
             $table->unsignedBigInteger('class_id');
             $table->unsignedBigInteger('section_id');
             $table->unsignedBigInteger('student_id');

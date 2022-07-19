@@ -186,7 +186,7 @@
                         <span v-if="errors.note" class="text-danger">{{ errors.note }}</span>
                     </div>
                     <div class="col-12 form-group mg-t-8">
-                        <button type="submit" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Save</button>
+                        <button type="submit" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Update</button>
                     </div>
                 </div>
             </form>
@@ -205,6 +205,7 @@ export default {
 
 
     props: {
+        fee : Object,
         errors: Object,
         'classes': {},
         'section': {},
@@ -219,40 +220,14 @@ export default {
 
     data() {
         return {
-            form: this.$inertia.form({
-                class_id: '',
-                section_id: '',
-                student_id: '',
-                father_name: '',
-                father_set: false,
-                payment_method: '',
-                receipt_number: '',
-                fees_submition_date: '',
-                fee_deposit_interval: '',
-                addmission_fee: '',
-                tution_fee: '',
-                sports_fee: '',
-                hostel_fee: '',
-                food_fee: '',
-                transpotation_fee: '',
-                activity_fees: '',
-                extra_class_fees: '',
-                others: '',
-                penality: '',
-                pending_due: '',
-                total_fee: '',
-                fee_month: '',
-                note: ''
-            }),
+            form: this.$inertia.form(this.fee),
 
 
         }
     },
     methods: {
         submit() {
-            this.form.post('/fees', {
-                preserveScroll: true
-            });
+          this.form.put(`/fees/${this.fee.id}`)
 
         },
         setfathername(event) {
