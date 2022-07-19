@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClassTeacherController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Foundation\Application;
@@ -58,7 +59,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('teacher', TeacherController::class);
     Route::get('/department',[AdminController::class, 'department'])->name('department');
     Route::post('/departmentpost',[AdminController::class, 'departmentpost'])->name('departmentpost');
-    Route::get('/class-teacher',[AdminController::class, 'class_teacher'])->name('class_teacher');
+
     Route::post('/classteacherpost',[AdminController::class, 'classteacherpost'])->name('classteacherpost');
     Route::get('/subject',[AdminController::class, 'subject'])->name('subject');
     Route::post('/subjectpost',[AdminController::class, 'subjectpost'])->name('subjectpost');
@@ -88,8 +89,9 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/get-all-classes',[ClassController::class , 'getAllClasses']);
     Route::get('/get-all-sections',[SectionController::class , 'getAllSectons']);
     Route::get('/fetch-students' , [StudentController::class , 'getStudents']);
-    Route::get('/all-class-teacher',[ClassController::class , 'allclassteacher'])->name('all-class-teacher');
-    Route::post('/class-teacher-destroy/destroy/{id}',[ClassController::class, 'deleteclassteacher'])->name('class-teacher-destroy');
+
+    Route::resource('class-teacher', ClassTeacherController::class);
+
     Route::get('/class-routine',[ClassController::class , 'createclassroutine'])->name('class-routine');
     Route::post('/routinepost',[ClassController::class, 'routinepost'])->name('routinepost');
     Route::get('/all-class-routine',[ClassController::class , 'allclassroutine'])->name('all-class-routine');

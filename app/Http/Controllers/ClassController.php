@@ -25,56 +25,8 @@ class ClassController extends Controller
 
     }
 
-    public function allclassteacher()
-    {
-         $id = Auth::user()->organisation_id;
 
-        $teacher = User::where('organisation_id', $id)
-            ->where('user_type', '4')
-            ->select('id', 'first_name', 'last_name')
-            ->get();
-        $class = Classes::where('organisation_id', $id)
-            ->select('id', 'class_name')
-            ->get();
-        $section = Section::where('organisation_id', $id)
-            ->select('id', 'section_name')
-            ->get();
-        $department = Department::where('organisation_id', $id)
-            ->select('id', 'department_name')
-            ->get();
 
-         $teacherdata = DB::table('class_teachers')
-            ->join('users', 'users.id', '=', 'class_teachers.teacher_id')
-            ->join('classes', 'classes.id', '=', 'class_teachers.class_id')
-            ->join('sections', 'sections.id', '=', 'class_teachers.section_id')
-            ->join('departments', 'departments.id', '=', 'class_teachers.department_id')
-            ->select('class_teachers.id','users.first_name','users.last_name','users.email','classes.class_name','sections.section_name','departments.department_name')
-             ->when(request()->only('search'), function ($query) {
-                 return $query->where('users.first_name', 'like', '%'.request('search').'%')
-                     ->orWhere('users.last_name', 'like', '%'.request('search').'%')
-                     ->orWhere('users.email', 'like', '%'.request('search').'%')
-                     ->orWhere('classes.class_name', 'like', '%'.request('search').'%')
-                     ->orWhere('sections.section_name', 'like', '%'.request('search').'%')
-                     ->orWhere('departments.department_name', 'like', '%'.request('search').'%');
-             })
-             ->paginate(10)
-             ->withQueryString();
-        return Inertia::render('Admin/Allclassteacher', [
-            'classdata' => $class,
-            'sectiondata' => $section,
-            'teachers' => $teacher,
-            'departmentdata' => $department,
-            'teacherdata' => $teacherdata,
-            'filters' => request()->all('search')
-        ]);
-
-    }
-
-    public function deleteclassteacher($id)
-    {
-        ClassTeacher::where('id',$id)->delete();
-        return Redirect::back()->with('success', 'Class Teacher deleted successfully');
-    }
 
     public function createclassroutine()
     {
