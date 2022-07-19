@@ -66,12 +66,24 @@
                                 <label>{{ index + 1 }}</label>
                             </div>
                         </td>
-                        <td>{{ data.teacher.first_name }}</td>
-                        <td>{{ data.teacher.last_name }}</td>
-                        <td>{{ data.teacher.email }}</td>
-                        <td>{{ data.department.department_name }}</td>
-                        <td>{{ data.class.class_name }}</td>
-                        <td>{{ data.section.section_name }}</td>
+                        <td v-if="data.teacher">{{ data.teacher.first_name }}</td>
+                        <td v-else>null</td>
+
+                        <td v-if="data.teacher">{{ data.teacher.last_name }}</td>
+                        <td v-else>null</td>
+
+                        <td v-if="data.teacher">{{ data.teacher.email }}</td>
+                        <td v-else>null</td>
+
+                        <td v-if="data.department">{{ data.department.department_name }}</td>
+                        <td v-else>null</td>
+
+                        <td v-if="data.class">{{ data.class.class_name }}</td>
+                        <td v-else>null</td>
+
+                        <td v-if="data.section">{{ data.section.section_name }}</td>
+                        <td v-else>null</td>
+
                         <td>
                             <div class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

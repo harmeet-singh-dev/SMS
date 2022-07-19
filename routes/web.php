@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClassRoutineController;
 use App\Http\Controllers\ClassTeacherController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
@@ -92,9 +93,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::resource('class-teacher', ClassTeacherController::class);
 
-    Route::get('/class-routine',[ClassController::class , 'createclassroutine'])->name('class-routine');
-    Route::post('/routinepost',[ClassController::class, 'routinepost'])->name('routinepost');
-    Route::get('/all-class-routine',[ClassController::class , 'allclassroutine'])->name('all-class-routine');
-    Route::post('/class-routine-destroy/destroy/{id}',[ClassController::class, 'deleteroutine'])->name('class-routine-destroy');
+    Route::resource('class-routine', ClassRoutineController::class);
+
 
 });
