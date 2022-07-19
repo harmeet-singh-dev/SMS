@@ -23,13 +23,16 @@ class AdminController extends Controller
     public function dashboard(Request $request){
         $user_type = Auth::user()->user_type;
 
-
         if($user_type == '0'){
             $Data = User::where('user_type', '=', '1')->count();
             return Inertia::render('Admin/Dashboard',compact('Data'));
         }
         if($user_type == '1'){
             return Inertia::render('Admin/OwnerDashboard');
+        }
+
+        if($user_type == '4'){
+            return redirect()->route('teachers.dashboard');
         }
     }
     public function createclasspro(Request $request){

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\FrontEnd\TeacherController as FrontTeacherController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -93,4 +94,16 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/all-class-routine',[ClassController::class , 'allclassroutine'])->name('all-class-routine');
     Route::post('/class-routine-destroy/destroy/{id}',[ClassController::class, 'deleteroutine'])->name('class-routine-destroy');
 
+    //Teacher Front End routes
+    Route::group(['prefix' => 'teachers', 'as' => 'teachers.'],function () {
+        Route::get('/dashboard', [FrontTeacherController::class, 'dashboard'])->name('dashboard');
+        Route::get('/routine', [FrontTeacherController::class, 'routine'])->name('routine');
+        Route::get('/class', [FrontTeacherController::class, 'class'])->name('class');
+        Route::get('attendance/{teacher_class}', [FrontTeacherController::class, 'attendance'])->name('attendance');
+        Route::post('student/{student_id}/attendance', [FrontTeacherController::class, 'update_attendance'])->name('student.attendance');
+
+        Route::get('/class/attendance/list', [FrontTeacherController::class, 'attendance_list'])->name('attendance.list');
+        Route::get('attendance/{teacher_class}/show', [FrontTeacherController::class, 'attendance_show'])->name('attendance');
+    });
+    
 });

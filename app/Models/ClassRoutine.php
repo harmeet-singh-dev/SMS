@@ -24,6 +24,27 @@ class ClassRoutine extends Model
         'friday',
         'saturday',
         'start_break',
-        'end_break'];
+        'end_break'
+    ];
 
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('teacher_name', 'like', '%'.$search.'%');
+            });
+        });
+    }
+
+    public function subject() {
+        return $this->belongsTo(Subject::class, 'subject_name');
+    }
+
+    public function class() {
+        return $this->belongsTo(Classes::class, 'class_name');
+    }
+
+    public function section() {
+        return $this->belongsTo(Section::class, 'section_name');
+    }
 }
