@@ -1,5 +1,5 @@
 <template>
-    
+
     <!-- Preloader Start Here -->
     <!--div id="preloader"></!--div-->
     <!-- Preloader End Here -->
@@ -49,8 +49,8 @@
                             aria-expanded="false">
                             <div class="admin-title">
                                 <h5 class="item-title">Stevne Zone</h5>
-                                
-                               
+
+
                             </div>
                             <div class="admin-img">
                                 <img src="/custom_folder/img/figure/admin.jpg" alt="Admin">
@@ -60,7 +60,7 @@
                             <div class="item-header">
                                 <h6 class="item-title">Steven Zone</h6>
                             </div>
-                         
+
                             <div class="item-content">
                                 <ul class="settings-list">
                                     <li><a href="#"><i class="flaticon-user"></i>My Profile</a></li>
@@ -96,11 +96,11 @@
                                     <div class="media-body space-sm">
                                         <div class="item-title">
                                             <a href="#">
-                                                <span class="item-name">Maria Zaman</span> 
-                                                <span class="item-time">18:30</span> 
-                                            </a>  
+                                                <span class="item-name">Maria Zaman</span>
+                                                <span class="item-time">18:30</span>
+                                            </a>
                                         </div>
-                                        <p>What is the reason of buy this item. 
+                                        <p>What is the reason of buy this item.
                                         Is it usefull for me.....</p>
                                     </div>
                                 </div>
@@ -111,11 +111,11 @@
                                     <div class="media-body space-sm">
                                         <div class="item-title">
                                             <a href="#">
-                                                <span class="item-name">Benny Roy</span> 
-                                                <span class="item-time">10:35</span> 
-                                            </a>  
+                                                <span class="item-name">Benny Roy</span>
+                                                <span class="item-time">10:35</span>
+                                            </a>
                                         </div>
-                                        <p>What is the reason of buy this item. 
+                                        <p>What is the reason of buy this item.
                                         Is it usefull for me.....</p>
                                     </div>
                                 </div>
@@ -126,11 +126,11 @@
                                     <div class="media-body space-sm">
                                         <div class="item-title">
                                             <a href="#">
-                                                <span class="item-name">Steven</span> 
-                                                <span class="item-time">02:35</span> 
-                                            </a>  
+                                                <span class="item-name">Steven</span>
+                                                <span class="item-time">02:35</span>
+                                            </a>
                                         </div>
-                                        <p>What is the reason of buy this item. 
+                                        <p>What is the reason of buy this item.
                                         Is it usefull for me.....</p>
                                     </div>
                                 </div>
@@ -141,11 +141,11 @@
                                     <div class="media-body space-sm">
                                         <div class="item-title">
                                             <a href="#">
-                                                <span class="item-name">Joshep Joe</span> 
-                                                <span class="item-time">12:35</span> 
-                                            </a>  
+                                                <span class="item-name">Joshep Joe</span>
+                                                <span class="item-time">12:35</span>
+                                            </a>
                                         </div>
-                                        <p>What is the reason of buy this item. 
+                                        <p>What is the reason of buy this item.
                                         Is it usefull for me.....</p>
                                     </div>
                                 </div>
@@ -196,7 +196,7 @@
                         </div>
                     </li>
                      <li class="navbar-item dropdown header-language">
-                        <a class="navbar-nav-link dropdown-toggle" href="#" role="button" 
+                        <a class="navbar-nav-link dropdown-toggle" href="#" role="button"
                         data-toggle="dropdown" aria-expanded="false"><i class="fas fa-globe-americas"></i>EN</a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item" href="#">English</a>
@@ -210,8 +210,8 @@
         </div>
 
     </div>
-    
-   
+
+
         <!-- Header Menu Area End Here -->
 </template>
 <script>

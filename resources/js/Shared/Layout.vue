@@ -1,24 +1,21 @@
 <template>
-    <div>
-        <header/>
-        <nav/>
-        <!-- Page Area Start Here -->
-        <div class="dashboard-page-one">
-            <!-- Sidebar Area Start Here -->
-            <sidebar/>
+    <header-componant/>
+    <nav-componant/>
+    <!-- Page Area Start Here -->
+    <div class="dashboard-page-one">
+        <!-- Sidebar Area Start Here -->
+        <sidebar/>
 
-            <!-- Sidebar Area End Here -->
+        <!-- Sidebar Area End Here -->
 
 
-            <div class="dashboard-content-one">
-                <flash-messages/>
-                <slot/>
-            </div>
+        <div class="dashboard-content-one">
+            <flash-messages/>
+            <slot/>
         </div>
-        <!-- Admit Form Area End Here -->
-        <footer/>
     </div>
-
+    <!-- Admit Form Area End Here -->
+    <footer-componant/>
 
 </template>
 
@@ -31,9 +28,9 @@ import FlashMessages from '@/Shared/FlashMessages.vue'
 
 export default {
     components: {
-        Footer,
-        Header,
-        Nav,
+        HeaderComponant: Header,
+        FooterComponant: Footer,
+        NavComponant: Nav,
         Sidebar,
         FlashMessages,
     },
