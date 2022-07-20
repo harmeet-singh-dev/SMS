@@ -207,27 +207,7 @@ class AdminController extends Controller
     }
 
 
-    public function class_teacher()
-    {
-        $id = Auth::user()->organisation_id;
 
-                $teacher = User::where('organisation_id',$id)
-                    ->where('user_type','4')
-                    ->select('id','first_name','last_name')
-                    ->get();
-                $class = Classes::where('organisation_id',$id)
-                    ->select('id','class_name')
-                    ->get();
-                $section = Section::where('organisation_id',$id)
-                    ->select('id','section_name')
-                    ->get();
-                $department = Department::where('organisation_id',$id)
-                    ->select('id','department_name')
-                    ->get();
-
-                return Inertia::render('Admin/Createclassteacher',['classdata'=>$class,'sectiondata'=>$section,'teacherdata'=>$teacher,'departmentdata'=>$department]);
-
-    }
 
     public function subject()
     {
@@ -277,15 +257,5 @@ class AdminController extends Controller
     }
 
 
-    public function classteacherpost(Request $request)
-    {
-        $id = Auth::user()->organisation_id;
-        ClassTeacher::create([
-                    'organisation_id' => $id,
-                    'teacher_id'=>$request->get('teacher_name'),
-                    'class_id'=>$request->get('class_name'),
-                    'section_id'=>$request->get('section_name'),
-                    'department_id'=>$request->get('department_name')
-                ]);
-    }
+
 }

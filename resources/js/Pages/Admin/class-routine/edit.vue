@@ -7,7 +7,7 @@
             <li>
                 <a href="dashboard">Dashboard</a>
             </li>
-            <li>Add Class Routine</li>
+            <li>Edit Class Routine</li>
         </ul>
 
     </div>
@@ -18,7 +18,7 @@
         <div class="card-body">
             <div class="heading-layout1">
                 <div class="item-title">
-                    <h3>Add Class Routine</h3>
+                    <h3>Edit Class Routine</h3>
                 </div>
                 <!-- Simple success message -->
                 <!--span v-if="success" :class="text-success">Record submitted successfully!</!--span-->
@@ -101,7 +101,7 @@
 
                         <button :type="submit"
                                 class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
-                            <slot>Click Here</slot>
+                            <slot>Update</slot>
                         </button>
                     </div>
                 </div>
@@ -122,6 +122,7 @@ import Layout from "@/Shared/Layout";
 
 export default {
     props: {
+        classRoutine: Object,
         errors: Object,
         'classes': {},
         'section': {},
@@ -134,62 +135,14 @@ export default {
 
     data() {
         return {
-
-            form: {
-                class_name: '',
-                section_name: '',
-                subject_name: '',
-                teacher_name: '',
-                start_time: '',
-                end_time: '',
-                date: '',
-                monday: '',
-                tuesday: '',
-                wednesday: '',
-                thursday: '',
-                friday: '',
-                saturday: '',
-                start_break: '',
-                end_break: ''
-            },
+            form: this.$inertia.form(this.classRoutine),
             errors: {},
 
         }
     },
     methods: {
         submit() {
-            this.errors = {};
-            axios.post('routinepost', this.form)
-                .then(res => {
-                    console.log(res.data);
-                    // this.success=true;
-
-                    this.form = {};
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Class Routine is created !!!'
-                    })
-                }).catch((error) => {
-                this.errors = error.response.data.errors
-                /*   if(this.errors = error.response.data.errors.name){
-                      Toast.fire({
-              icon:'error',
-              title:'name'
-           }) } */
-
-                /* if(this.errors = error.response.data.errors.place){
-                           Toast.fire({
-                   icon:'error',
-                   title:'place'
-                })  }*/
-
-                // this.success=false;
-
-            });
-            //simple success message
-            /*  setTimeout(() => {
-               this.success = false
-                         }, 3000)*/
+             this.form.put(`/class-routine/${this.classRoutine.id}`)
         },
 
 

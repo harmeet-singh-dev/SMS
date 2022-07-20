@@ -1,36 +1,4 @@
 <template>
-    <div v-if="showUpdateModal">
-        <transition name="modal">
-            <div class="modal-mask">
-                <div class="modal-wrapper">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Update Section Name</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true" @click="showUpdateModal = false">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="first_name">Section Name</label>
-                                    <input type="text" class="form-control" id="subject_name"
-                                           v-model="updateData.section_name">
-                                </div>
-
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" @click="showUpdateModal = false">Close
-                                </button>
-                                <button @click="update()" type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </transition>
-    </div>
     <!-- Breadcubs Area Start Here -->
     <div class="breadcrumbs-area">
         <h3>Class Teacher</h3>
@@ -63,6 +31,12 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-8">
+                    <div class="text-right">
+                        <a href="/class-teacher/create" class="btn btn-primary"><i
+                            class="fas fa-plus"></i> Add Class Teacher</a>
+                    </div>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table display data-table text-nowrap">
@@ -83,7 +57,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(user,index) in teacherdata.data" :key="index">
+                    <tr v-for="(data,index) in teacherdata.data" :key="index">
 
 
                         <td>
@@ -92,12 +66,24 @@
                                 <label>{{ index + 1 }}</label>
                             </div>
                         </td>
-                        <td>{{ user.first_name }}</td>
-                        <td>{{ user.last_name }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.department_name }}</td>
-                        <td>{{ user.class_name }}</td>
-                        <td>{{ user.section_name }}</td>
+                        <td v-if="data.teacher">{{ data.teacher.first_name }}</td>
+                        <td v-else>null</td>
+
+                        <td v-if="data.teacher">{{ data.teacher.last_name }}</td>
+                        <td v-else>null</td>
+
+                        <td v-if="data.teacher">{{ data.teacher.email }}</td>
+                        <td v-else>null</td>
+
+                        <td v-if="data.department">{{ data.department.department_name }}</td>
+                        <td v-else>null</td>
+
+                        <td v-if="data.class">{{ data.class.class_name }}</td>
+                        <td v-else>null</td>
+
+                        <td v-if="data.section">{{ data.section.section_name }}</td>
+                        <td v-else>null</td>
+
                         <td>
                             <div class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -105,9 +91,9 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
 
-                                    <a class="dropdown-item" @click="showUpdate(user)"><i
+                                     <a class="dropdown-item" :href="`/class-teacher/${data.id}/edit`"><i
                                         class="fas fa-cogs text-dark-pastel-green"></i> Edit</a>
-                                    <button class="dropdown-item" @click="destroy(user.id)"><i
+                                    <button class="dropdown-item" @click="destroy(classData.id)"><i
                                         class="fas fa-times text-orange-red"></i>Delete
                                     </button>
                                 </div>
@@ -137,7 +123,6 @@ export default {
     },
     data() {
         return {
-            showUpdateModal: false,
              indexForm: {
                 search: this.filters.search,
             },
@@ -153,29 +138,15 @@ export default {
 
         destroy(id) {
             if (confirm('Are you sure you want to delete this?')) {
-                this.$inertia.post('class-teacher-destroy/destroy/' + id)
+                this.$inertia.delete(`/class-teacher/${id}`);
             }
         },
 
-        update() {
-            //show update popup
-            this.$inertia.post(`/class-teacher-update/update/${this.updateData.id}`, {
-                data: this.updateData
-            });
-            this.showUpdateModal = false;
-        },
-
-        showUpdate(data) {
-            //show update popup
-            this.updateData = data;
-            this.showUpdateModal = true;
-
-        },
     },
     watch: {
         'indexForm.search': {
             handler: throttle(function () {
-                this.$inertia.get('/all-class-teacher', pickBy(this.indexForm), {preserveState: true})
+                this.$inertia.get('/class-teacher', pickBy(this.indexForm), {preserveState: true})
             }, 150),
         },
     },
