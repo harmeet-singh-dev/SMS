@@ -26,7 +26,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item sidebar-nav-item">
+                <li v-if="canAccess('student')" class="nav-item sidebar-nav-item">
                     <a href="#" class="nav-link"><i class="flaticon-classmates"></i><span>Students</span></a>
                     <ul class="nav sub-group-menu">
                         <li class="nav-item">
@@ -47,7 +47,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item sidebar-nav-item">
+
+                <li v-if="canAccess('teacher')" class="nav-item sidebar-nav-item">
                     <a href="#" class="nav-link"><i
                         class="flaticon-multiple-users-silhouette"></i><span>Teachers</span></a>
                     <ul class="nav sub-group-menu">
@@ -69,7 +70,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item sidebar-nav-item">
+
+                <li v-if="canAccess('parent')" class="nav-item sidebar-nav-item">
                     <a href="#" class="nav-link"><i class="flaticon-couple"></i><span>Parents</span></a>
                     <ul class="nav sub-group-menu">
                         <li class="nav-item">
@@ -86,6 +88,7 @@
                         </li>
                     </ul>
                 </li>
+
                 <li class="nav-item sidebar-nav-item">
                     <a href="#" class="nav-link"><i class="flaticon-books"></i><span>Library</span></a>
                     <ul class="nav sub-group-menu">
@@ -99,7 +102,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item sidebar-nav-item">
+
+                <li  v-if="canAccess('account')" class="nav-item sidebar-nav-item">
                     <a href="#" class="nav-link"><i class="flaticon-technological"></i><span>Acconunt</span></a>
                     <ul class="nav sub-group-menu">
                         <li class="nav-item">
@@ -116,7 +120,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item sidebar-nav-item">
+
+                <li v-if="canAccess('class')"  class="nav-item sidebar-nav-item">
                     <a href="#" class="nav-link"><i
                         class="flaticon-maths-class-materials-cross-of-a-pencil-and-a-ruler"></i><span>Class</span></a>
                     <ul class="nav sub-group-menu">
@@ -130,15 +135,18 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
+
+                <li v-if="canAccess('subject')" class="nav-item">
                     <a href="/all-subject" class="nav-link"><i
                         class="flaticon-open-book"></i><span>Subject</span></a>
                 </li>
-                <li class="nav-item">
+
+                <li v-if="canAccess('class_routine')" class="nav-item">
                     <a href="/all-class-routine" class="nav-link"><i class="flaticon-calendar"></i><span>Class
                                     Routine</span></a>
                 </li>
-                <li class="nav-item">
+
+                <li v-if="canAccess('attendance')" class="nav-item">
                     <a href="student-attendence.html" class="nav-link"><i
                         class="flaticon-checklist"></i><span>Attendence</span></a>
                 </li>
@@ -211,3 +219,21 @@
         </div>
     </div>
 </template>
+
+//add computed property for geting the current route
+<script>
+    export default {
+        methods: {
+            canAccess(route) {
+                //check if $page.props.permissions is set
+                if (this.$page.props.permissions) {
+                    //check if the user has the permission
+                    return this.$page.props.permissions[route];
+                    // return this.$page.props.permissions[route];
+                }
+                //no permission set for this user, returning true for now
+                return true;
+            }
+        }
+    }
+</script>

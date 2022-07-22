@@ -92,7 +92,7 @@
                         <th>Sub Admin</th>
                         <th>Student</th>
                         <th>Teacher</th>
-
+                        <th>Parent</th>
                         <th>Account</th>
                         <th>Class</th>
                         <th>Subject</th>
