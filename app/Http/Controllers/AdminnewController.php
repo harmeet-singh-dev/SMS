@@ -23,6 +23,7 @@ class AdminnewController extends Controller
         $sub_admins = User::where('organisation_id', '=', $id)
             ->filter(request()->only('search'))
             ->where('user_type', '=', 5)
+            ->whereHas('permission')
             ->with('permission')
             ->select(['id', 'first_name', 'last_name', 'email'])
             ->paginate(10)
